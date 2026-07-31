@@ -9,7 +9,7 @@ export type Task = {
   impact: number; // 1-5
   urgency: number; // 1-5
   effort: number; // 1-5
-  due?: string; // yyyy-mm-dd
+  due?: string | undefined; // yyyy-mm-dd
   done: boolean;
   createdAt: string;
 };

@@ -10,33 +10,167 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BudgetRouteImport } from './routes/budget'
+import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as DeclutterRouteImport } from './routes/declutter'
+import { Route as GoalsRouteImport } from './routes/goals'
+import { Route as HabitsRouteImport } from './routes/habits'
+import { Route as InsightsRouteImport } from './routes/insights'
+import { Route as JournalRouteImport } from './routes/journal'
+import { Route as PlannerRouteImport } from './routes/planner'
+import { Route as ReviewRouteImport } from './routes/review'
+import { Route as TasksRouteImport } from './routes/tasks'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BudgetRoute = BudgetRouteImport.update({
+  id: '/budget',
+  path: '/budget',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeclutterRoute = DeclutterRouteImport.update({
+  id: '/declutter',
+  path: '/declutter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GoalsRoute = GoalsRouteImport.update({
+  id: '/goals',
+  path: '/goals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HabitsRoute = HabitsRouteImport.update({
+  id: '/habits',
+  path: '/habits',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsRoute = InsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JournalRoute = JournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlannerRoute = PlannerRouteImport.update({
+  id: '/planner',
+  path: '/planner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReviewRoute = ReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TasksRoute = TasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/budget': typeof BudgetRoute
+  '/calendar': typeof CalendarRoute
+  '/declutter': typeof DeclutterRoute
+  '/goals': typeof GoalsRoute
+  '/habits': typeof HabitsRoute
+  '/insights': typeof InsightsRoute
+  '/journal': typeof JournalRoute
+  '/planner': typeof PlannerRoute
+  '/review': typeof ReviewRoute
+  '/tasks': typeof TasksRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/budget': typeof BudgetRoute
+  '/calendar': typeof CalendarRoute
+  '/declutter': typeof DeclutterRoute
+  '/goals': typeof GoalsRoute
+  '/habits': typeof HabitsRoute
+  '/insights': typeof InsightsRoute
+  '/journal': typeof JournalRoute
+  '/planner': typeof PlannerRoute
+  '/review': typeof ReviewRoute
+  '/tasks': typeof TasksRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/budget': typeof BudgetRoute
+  '/calendar': typeof CalendarRoute
+  '/declutter': typeof DeclutterRoute
+  '/goals': typeof GoalsRoute
+  '/habits': typeof HabitsRoute
+  '/insights': typeof InsightsRoute
+  '/journal': typeof JournalRoute
+  '/planner': typeof PlannerRoute
+  '/review': typeof ReviewRoute
+  '/tasks': typeof TasksRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/budget'
+    | '/calendar'
+    | '/declutter'
+    | '/goals'
+    | '/habits'
+    | '/insights'
+    | '/journal'
+    | '/planner'
+    | '/review'
+    | '/tasks'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/budget'
+    | '/calendar'
+    | '/declutter'
+    | '/goals'
+    | '/habits'
+    | '/insights'
+    | '/journal'
+    | '/planner'
+    | '/review'
+    | '/tasks'
+  id:
+    | '__root__'
+    | '/'
+    | '/budget'
+    | '/calendar'
+    | '/declutter'
+    | '/goals'
+    | '/habits'
+    | '/insights'
+    | '/journal'
+    | '/planner'
+    | '/review'
+    | '/tasks'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BudgetRoute: typeof BudgetRoute
+  CalendarRoute: typeof CalendarRoute
+  DeclutterRoute: typeof DeclutterRoute
+  GoalsRoute: typeof GoalsRoute
+  HabitsRoute: typeof HabitsRoute
+  InsightsRoute: typeof InsightsRoute
+  JournalRoute: typeof JournalRoute
+  PlannerRoute: typeof PlannerRoute
+  ReviewRoute: typeof ReviewRoute
+  TasksRoute: typeof TasksRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +182,91 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/budget': {
+      id: '/budget'
+      path: '/budget'
+      fullPath: '/budget'
+      preLoaderRoute: typeof BudgetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/declutter': {
+      id: '/declutter'
+      path: '/declutter'
+      fullPath: '/declutter'
+      preLoaderRoute: typeof DeclutterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/goals': {
+      id: '/goals'
+      path: '/goals'
+      fullPath: '/goals'
+      preLoaderRoute: typeof GoalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/habits': {
+      id: '/habits'
+      path: '/habits'
+      fullPath: '/habits'
+      preLoaderRoute: typeof HabitsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights': {
+      id: '/insights'
+      path: '/insights'
+      fullPath: '/insights'
+      preLoaderRoute: typeof InsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journal': {
+      id: '/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof JournalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/planner': {
+      id: '/planner'
+      path: '/planner'
+      fullPath: '/planner'
+      preLoaderRoute: typeof PlannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/review': {
+      id: '/review'
+      path: '/review'
+      fullPath: '/review'
+      preLoaderRoute: typeof ReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tasks': {
+      id: '/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof TasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BudgetRoute: BudgetRoute,
+  CalendarRoute: CalendarRoute,
+  DeclutterRoute: DeclutterRoute,
+  GoalsRoute: GoalsRoute,
+  HabitsRoute: HabitsRoute,
+  InsightsRoute: InsightsRoute,
+  JournalRoute: JournalRoute,
+  PlannerRoute: PlannerRoute,
+  ReviewRoute: ReviewRoute,
+  TasksRoute: TasksRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

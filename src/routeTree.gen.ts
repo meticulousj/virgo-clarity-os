@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BudgetRouteImport } from './routes/budget'
 import { Route as GoalsRouteImport } from './routes/goals'
 import { Route as HabitsRouteImport } from './routes/habits'
 import { Route as PlannerRouteImport } from './routes/planner'
@@ -18,6 +19,11 @@ import { Route as TasksRouteImport } from './routes/tasks'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BudgetRoute = BudgetRouteImport.update({
+  id: '/budget',
+  path: '/budget',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GoalsRoute = GoalsRouteImport.update({
@@ -43,6 +49,7 @@ const TasksRoute = TasksRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/budget': typeof BudgetRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
   '/planner': typeof PlannerRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/budget': typeof BudgetRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
   '/planner': typeof PlannerRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/budget': typeof BudgetRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
   '/planner': typeof PlannerRoute
@@ -65,14 +74,16 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/goals' | '/habits' | '/planner' | '/tasks'
+  fullPaths: '/' | '/budget' | '/goals' | '/habits' | '/planner' | '/tasks'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/goals' | '/habits' | '/planner' | '/tasks'
-  id: '__root__' | '/' | '/goals' | '/habits' | '/planner' | '/tasks'
+  to: '/' | '/budget' | '/goals' | '/habits' | '/planner' | '/tasks'
+  id:
+    '__root__' | '/' | '/budget' | '/goals' | '/habits' | '/planner' | '/tasks'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BudgetRoute: typeof BudgetRoute
   GoalsRoute: typeof GoalsRoute
   HabitsRoute: typeof HabitsRoute
   PlannerRoute: typeof PlannerRoute
@@ -86,6 +97,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/budget': {
+      id: '/budget'
+      path: '/budget'
+      fullPath: '/budget'
+      preLoaderRoute: typeof BudgetRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/goals': {
@@ -121,6 +139,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BudgetRoute: BudgetRoute,
   GoalsRoute: GoalsRoute,
   HabitsRoute: HabitsRoute,
   PlannerRoute: PlannerRoute,

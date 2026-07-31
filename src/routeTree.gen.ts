@@ -16,6 +16,7 @@ import { Route as GoalsRouteImport } from './routes/goals'
 import { Route as HabitsRouteImport } from './routes/habits'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as PlannerRouteImport } from './routes/planner'
+import { Route as ReviewRouteImport } from './routes/review'
 import { Route as TasksRouteImport } from './routes/tasks'
 
 const IndexRoute = IndexRouteImport.update({
@@ -53,6 +54,11 @@ const PlannerRoute = PlannerRouteImport.update({
   path: '/planner',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReviewRoute = ReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TasksRoute = TasksRouteImport.update({
   id: '/tasks',
   path: '/tasks',
@@ -67,6 +73,7 @@ export interface FileRoutesByFullPath {
   '/habits': typeof HabitsRoute
   '/journal': typeof JournalRoute
   '/planner': typeof PlannerRoute
+  '/review': typeof ReviewRoute
   '/tasks': typeof TasksRoute
 }
 export interface FileRoutesByTo {
@@ -77,6 +84,7 @@ export interface FileRoutesByTo {
   '/habits': typeof HabitsRoute
   '/journal': typeof JournalRoute
   '/planner': typeof PlannerRoute
+  '/review': typeof ReviewRoute
   '/tasks': typeof TasksRoute
 }
 export interface FileRoutesById {
@@ -88,6 +96,7 @@ export interface FileRoutesById {
   '/habits': typeof HabitsRoute
   '/journal': typeof JournalRoute
   '/planner': typeof PlannerRoute
+  '/review': typeof ReviewRoute
   '/tasks': typeof TasksRoute
 }
 export interface FileRouteTypes {
@@ -100,6 +109,7 @@ export interface FileRouteTypes {
     | '/habits'
     | '/journal'
     | '/planner'
+    | '/review'
     | '/tasks'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -110,6 +120,7 @@ export interface FileRouteTypes {
     | '/habits'
     | '/journal'
     | '/planner'
+    | '/review'
     | '/tasks'
   id:
     | '__root__'
@@ -120,6 +131,7 @@ export interface FileRouteTypes {
     | '/habits'
     | '/journal'
     | '/planner'
+    | '/review'
     | '/tasks'
   fileRoutesById: FileRoutesById
 }
@@ -131,6 +143,7 @@ export interface RootRouteChildren {
   HabitsRoute: typeof HabitsRoute
   JournalRoute: typeof JournalRoute
   PlannerRoute: typeof PlannerRoute
+  ReviewRoute: typeof ReviewRoute
   TasksRoute: typeof TasksRoute
 }
 
@@ -185,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlannerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/review': {
+      id: '/review'
+      path: '/review'
+      fullPath: '/review'
+      preLoaderRoute: typeof ReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tasks': {
       id: '/tasks'
       path: '/tasks'
@@ -203,6 +223,7 @@ const rootRouteChildren: RootRouteChildren = {
   HabitsRoute: HabitsRoute,
   JournalRoute: JournalRoute,
   PlannerRoute: PlannerRoute,
+  ReviewRoute: ReviewRoute,
   TasksRoute: TasksRoute,
 }
 export const routeTree = rootRouteImport

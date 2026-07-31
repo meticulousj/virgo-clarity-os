@@ -1,24 +1,54 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Sidebar } from "@/components/virgo/sidebar";
+import { Header } from "@/components/virgo/header";
+import { DailySummary } from "@/components/virgo/widgets/daily-summary";
+import { TaskList } from "@/components/virgo/widgets/task-list";
+import { CalendarMini } from "@/components/virgo/widgets/calendar-mini";
+import { FocusTimer } from "@/components/virgo/widgets/focus-timer";
+import { HabitTracker } from "@/components/virgo/widgets/habit-tracker";
+import { NotesWidget } from "@/components/virgo/widgets/notes-widget";
+import { InboxPreview } from "@/components/virgo/widgets/inbox-preview";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
   component: Index,
+  head: () => ({
+    meta: [
+      { title: "Virgo OS — Clarity & Execution" },
+      {
+        name: "description",
+        content: "Your all-in-one personal operating system for clarity and execution.",
+      },
+      { property: "og:title", content: "Virgo OS — Clarity & Execution" },
+      {
+        property: "og:description",
+        content: "Your all-in-one personal operating system for clarity and execution.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background">
+      <Sidebar />
+      <main className="pt-16 lg:pt-0 lg:pl-60">
+        <div className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
+          <Header />
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="md:col-span-2">
+              <DailySummary />
+            </div>
+            <TaskList />
+            <CalendarMini />
+            <FocusTimer />
+            <HabitTracker />
+            <NotesWidget />
+            <InboxPreview />
+          </div>
+        </div>
+      </main>
     </div>
   );
 }

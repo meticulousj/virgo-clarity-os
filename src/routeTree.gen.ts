@@ -14,6 +14,7 @@ import { Route as BudgetRouteImport } from './routes/budget'
 import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as GoalsRouteImport } from './routes/goals'
 import { Route as HabitsRouteImport } from './routes/habits'
+import { Route as JournalRouteImport } from './routes/journal'
 import { Route as PlannerRouteImport } from './routes/planner'
 import { Route as TasksRouteImport } from './routes/tasks'
 
@@ -42,6 +43,11 @@ const HabitsRoute = HabitsRouteImport.update({
   path: '/habits',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JournalRoute = JournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlannerRoute = PlannerRouteImport.update({
   id: '/planner',
   path: '/planner',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/calendar': typeof CalendarRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
+  '/journal': typeof JournalRoute
   '/planner': typeof PlannerRoute
   '/tasks': typeof TasksRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/calendar': typeof CalendarRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
+  '/journal': typeof JournalRoute
   '/planner': typeof PlannerRoute
   '/tasks': typeof TasksRoute
 }
@@ -78,16 +86,31 @@ export interface FileRoutesById {
   '/calendar': typeof CalendarRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
+  '/journal': typeof JournalRoute
   '/planner': typeof PlannerRoute
   '/tasks': typeof TasksRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/budget' | '/calendar' | '/goals' | '/habits' | '/planner' | '/tasks'
+    | '/'
+    | '/budget'
+    | '/calendar'
+    | '/goals'
+    | '/habits'
+    | '/journal'
+    | '/planner'
+    | '/tasks'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/budget' | '/calendar' | '/goals' | '/habits' | '/planner' | '/tasks'
+    | '/'
+    | '/budget'
+    | '/calendar'
+    | '/goals'
+    | '/habits'
+    | '/journal'
+    | '/planner'
+    | '/tasks'
   id:
     | '__root__'
     | '/'
@@ -95,6 +118,7 @@ export interface FileRouteTypes {
     | '/calendar'
     | '/goals'
     | '/habits'
+    | '/journal'
     | '/planner'
     | '/tasks'
   fileRoutesById: FileRoutesById
@@ -105,6 +129,7 @@ export interface RootRouteChildren {
   CalendarRoute: typeof CalendarRoute
   GoalsRoute: typeof GoalsRoute
   HabitsRoute: typeof HabitsRoute
+  JournalRoute: typeof JournalRoute
   PlannerRoute: typeof PlannerRoute
   TasksRoute: typeof TasksRoute
 }
@@ -146,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HabitsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/journal': {
+      id: '/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof JournalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/planner': {
       id: '/planner'
       path: '/planner'
@@ -169,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   CalendarRoute: CalendarRoute,
   GoalsRoute: GoalsRoute,
   HabitsRoute: HabitsRoute,
+  JournalRoute: JournalRoute,
   PlannerRoute: PlannerRoute,
   TasksRoute: TasksRoute,
 }

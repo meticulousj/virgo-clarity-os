@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BudgetRouteImport } from './routes/budget'
 import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as DeclutterRouteImport } from './routes/declutter'
 import { Route as GoalsRouteImport } from './routes/goals'
 import { Route as HabitsRouteImport } from './routes/habits'
 import { Route as JournalRouteImport } from './routes/journal'
@@ -32,6 +33,11 @@ const BudgetRoute = BudgetRouteImport.update({
 const CalendarRoute = CalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DeclutterRoute = DeclutterRouteImport.update({
+  id: '/declutter',
+  path: '/declutter',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GoalsRoute = GoalsRouteImport.update({
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/budget': typeof BudgetRoute
   '/calendar': typeof CalendarRoute
+  '/declutter': typeof DeclutterRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
   '/journal': typeof JournalRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/budget': typeof BudgetRoute
   '/calendar': typeof CalendarRoute
+  '/declutter': typeof DeclutterRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
   '/journal': typeof JournalRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/budget': typeof BudgetRoute
   '/calendar': typeof CalendarRoute
+  '/declutter': typeof DeclutterRoute
   '/goals': typeof GoalsRoute
   '/habits': typeof HabitsRoute
   '/journal': typeof JournalRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/'
     | '/budget'
     | '/calendar'
+    | '/declutter'
     | '/goals'
     | '/habits'
     | '/journal'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/'
     | '/budget'
     | '/calendar'
+    | '/declutter'
     | '/goals'
     | '/habits'
     | '/journal'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/'
     | '/budget'
     | '/calendar'
+    | '/declutter'
     | '/goals'
     | '/habits'
     | '/journal'
@@ -139,6 +151,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BudgetRoute: typeof BudgetRoute
   CalendarRoute: typeof CalendarRoute
+  DeclutterRoute: typeof DeclutterRoute
   GoalsRoute: typeof GoalsRoute
   HabitsRoute: typeof HabitsRoute
   JournalRoute: typeof JournalRoute
@@ -168,6 +181,13 @@ declare module '@tanstack/react-router' {
       path: '/calendar'
       fullPath: '/calendar'
       preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/declutter': {
+      id: '/declutter'
+      path: '/declutter'
+      fullPath: '/declutter'
+      preLoaderRoute: typeof DeclutterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/goals': {
@@ -219,6 +239,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BudgetRoute: BudgetRoute,
   CalendarRoute: CalendarRoute,
+  DeclutterRoute: DeclutterRoute,
   GoalsRoute: GoalsRoute,
   HabitsRoute: HabitsRoute,
   JournalRoute: JournalRoute,

@@ -4,9 +4,20 @@ import * as React from "react";
 import { AppShell } from "@/components/virgo/app-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Loader2, Sparkles } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Loader2, Sparkles, Trash2 } from "lucide-react";
 import { generateRoutineTips } from "@/lib/ai.functions";
-import { avg, contextSnapshot, setState, useVirgo } from "@/lib/store";
+import {
+  avg,
+  contextSnapshot,
+  removeHealth,
+  setState,
+  today,
+  upsertHealth,
+  useVirgo,
+  type HealthLog,
+} from "@/lib/store";
 
 export const Route = createFileRoute("/insights")({
   component: InsightsPage,
@@ -90,6 +101,8 @@ function InsightsPage() {
           </Card>
         ))}
       </div>
+
+      <HealthLogger logs={state.health} />
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>

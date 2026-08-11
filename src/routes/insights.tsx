@@ -156,3 +156,118 @@ function InsightsPage() {
     </AppShell>
   );
 }
+
+const FIELDS = [
+  { key: "sleep", label: "Sleep (h)", step: "0.1", max: 24 },
+  { key: "energy", label: "Energy (1-5)", step: "1", max: 5 },
+  { key: "focusMinutes", label: "Focus (min)", step: "5", max: 1440 },
+  { key: "steps", label: "Steps", step: "100", max: 100000 },
+] as const;
+
+const emptyDraft = () => ({
+  date: today(),
+  sleep: "7.5",
+  energy: "4",
+  focusMinutes: "180",
+  steps: "8000",
+});
+
+function HealthLogger({ logs }: { logs: HealthLog[] }) {
+  const [draft, setDraft] = React.useState(emptyDraft);
+
+  const existing = logs.find((h) => h.date === draft.date);
+
+  const save = (e: React.FormEvent) => {
+    e.preventDefault();
+    const num = (v: string) => (Number.isFinite(Number(v)) ? Number(v) : 0);
+    upsertHealth({
+      date: draft.date,
+      sleep: Math.max(0, Math.min(24, num(draft.sleep))),
+      energy: Math.max(1, Math.min(5, Math.round(num(draft.energy)))),
+      focusMinutes: Math.max(0, Math.round(num(draft.focusMinutes))),
+      steps: Math.max(0, Math.round(num(draft.steps))),
+    });
+  };
+
+  const edit = (h: HealthLog) =>
+    setDraft({
+      date: h.date,
+      sleep: String(h.sleep),
+      energy: String(h.energy),
+      focusMinutes: String(h.focusMinutes),
+      steps: String(h.steps),
+    });
+
+  const rows = [...logs].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 10);
+
+  return (
+    <Card className="mb-4">
+      <CardHeader className="pb-2">
+        <CardTitle className="font-heading text-lg">Log your day</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={save} className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="space-y-1">
+            <Label htmlFor="hl-date" className="text-xs">
+              Date
+            </Label>
+            <Input
+              id="hl-date"
+              type="date"
+              value={draft.date}
+              onChange={(e) => setDraft({ ...draft, date: e.target.value })}
+            />
+          </div>
+          {FIELDS.map((f) => (
+            <div key={f.key} className="space-y-1">
+              <Label htmlFor={`hl-${f.key}`} className="text-xs">
+                {f.label}
+              </Label>
+              <Input
+                id={`hl-${f.key}`}
+                type="number"
+                min={0}
+                max={f.max}
+                step={f.step}
+                value={draft[f.key]}
+                onChange={(e) => setDraft({ ...draft, [f.key]: e.target.value })}
+              />
+            </div>
+          ))}
+          <div className="flex items-end">
+            <Button type="submit" className="w-full">
+              {existing ? "Update" : "Save"}
+            </Button>
+          </div>
+        </form>
+
+        <ul className="mt-4 divide-y rounded-lg border">
+          {rows.map((h) => (
+            <li key={h.date} className="flex items-center gap-3 p-2 text-sm">
+              <span className="w-24 tabular-nums text-muted-foreground">{h.date}</span>
+              <span className="tabular-nums">{h.sleep.toFixed(1)}h sleep</span>
+              <span className="tabular-nums text-muted-foreground">energy {h.energy}/5</span>
+              <span className="tabular-nums text-muted-foreground">{h.focusMinutes}m focus</span>
+              <span className="tabular-nums text-muted-foreground">
+                {h.steps.toLocaleString()} steps
+              </span>
+              <div className="ml-auto flex gap-1">
+                <Button variant="ghost" size="sm" onClick={() => edit(h)}>
+                  Edit
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label={`Delete log for ${h.date}`}
+                  onClick={() => removeHealth(h.date)}
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+    </Card>
+  );
+}

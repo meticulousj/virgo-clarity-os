@@ -314,6 +314,20 @@ export function resetState() {
   setState(() => seed);
 }
 
+export function upsertHealth(entry: HealthLog) {
+  setState((s) => {
+    const exists = s.health.some((h) => h.date === entry.date);
+    const health = exists
+      ? s.health.map((h) => (h.date === entry.date ? entry : h))
+      : [...s.health, entry];
+    return { ...s, health: health.sort((a, b) => a.date.localeCompare(b.date)) };
+  });
+}
+
+export function removeHealth(date: string) {
+  setState((s) => ({ ...s, health: s.health.filter((h) => h.date !== date) }));
+}
+
 export function priorityScore(task: Task): number {
   const dueBoost = (() => {
     if (!task.due) return 0;

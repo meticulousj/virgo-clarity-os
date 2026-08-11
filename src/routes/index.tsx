@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import * as React from "react";
 import { AppShell } from "@/components/virgo/app-shell";
 import { FocusTimer } from "@/components/virgo/widgets/focus-timer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -43,6 +44,16 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const state = useVirgo();
+  const [dateLabel, setDateLabel] = React.useState("");
+  React.useEffect(() => {
+    setDateLabel(
+      new Date().toLocaleDateString(undefined, {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+      }),
+    );
+  }, []);
   const week = weekDates();
   const open = sortedTasks(state.tasks.filter((t) => !t.done));
   const events = state.events
@@ -71,11 +82,7 @@ function Index() {
   return (
     <AppShell
       title="Today"
-      subtitle={new Date().toLocaleDateString(undefined, {
-        weekday: "long",
-        month: "long",
-        day: "numeric",
-      })}
+      subtitle={dateLabel}
       actions={
         <Button asChild>
           <Link to="/planner">

@@ -66,7 +66,7 @@ function CalendarPage() {
               <Card key={d}>
                 <CardHeader className="pb-2">
                   <CardTitle className="font-heading text-base">
-                    {new Date(d).toLocaleDateString(undefined, {
+                    {new Date(`${d}T00:00:00`).toLocaleDateString(undefined, {
                       weekday: "long",
                       month: "short",
                       day: "numeric",

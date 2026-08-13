@@ -139,12 +139,7 @@ export function AppShell({
             <Nav onNavigate={() => setOpen(false)} />
           </SheetContent>
         </Sheet>
-        <div className="ml-3 flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-primary text-primary-foreground">
-            <Command className="h-4 w-4" />
-          </div>
-          <span className="font-heading text-base font-semibold tracking-tight">Virgo OS</span>
-        </div>
+        <img src={wordmark.url} alt="Virgo OS" className="ml-3 h-7 w-auto" />
       </div>
 
       <main className="pt-16 lg:pl-60 lg:pt-0">

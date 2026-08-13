@@ -349,7 +349,7 @@ export function priorityScore(task: Task): number {
 }
 
 export function priorityBand(score: number): { label: string; tone: string } {
-  if (score >= 70) return { label: "Critical", tone: "bg-primary text-primary-foreground" };
+  if (score >= 70) return { label: "Critical", tone: "bg-gold text-gold-foreground" };
   if (score >= 50) return { label: "High", tone: "bg-secondary text-secondary-foreground" };
   if (score >= 30) return { label: "Medium", tone: "bg-muted text-muted-foreground" };
   return { label: "Low", tone: "bg-muted text-muted-foreground" };

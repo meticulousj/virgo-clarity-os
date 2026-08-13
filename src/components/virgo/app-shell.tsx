@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import wordmark from "@/assets/virgo-wordmark.png.asset.json";
+const WORDMARK_URL = "/virgo-wordmark.png";
 import {
   LayoutDashboard,
   Sparkles,

@@ -285,6 +285,7 @@ function subscribe(cb: () => void) {
 }
 
 const getSnapshot = () => state;
+const getServerSnapshot = () => seed;
 
 let hydrated = false;
 function hydrate() {
@@ -303,7 +304,7 @@ function hydrate() {
 }
 
 export function useVirgo() {
-  const snap = React.useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
+  const snap = React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   React.useEffect(() => {
     hydrate();
   }, []);

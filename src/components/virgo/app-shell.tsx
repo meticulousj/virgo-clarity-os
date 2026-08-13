@@ -62,7 +62,7 @@ function Nav({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <div className="flex h-full flex-col">
       <div className="flex h-16 items-center gap-2 px-4">
-        <img src={wordmark.url} alt="Virgo OS" className="h-8 w-auto" />
+        <img src={WORDMARK_URL} alt="Virgo OS" className="h-8 w-auto" />
       </div>
       <Separator />
       <nav className="flex-1 overflow-auto px-3 py-4">
@@ -139,7 +139,7 @@ export function AppShell({
             <Nav onNavigate={() => setOpen(false)} />
           </SheetContent>
         </Sheet>
-        <img src={wordmark.url} alt="Virgo OS" className="ml-3 h-7 w-auto" />
+        <img src={WORDMARK_URL} alt="Virgo OS" className="ml-3 h-7 w-auto" />
       </div>
 
       <main className="pt-16 lg:pl-60 lg:pt-0">

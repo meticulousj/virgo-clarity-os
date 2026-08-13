@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import wordmark from "@/assets/virgo-wordmark.png.asset.json";
 import {
   LayoutDashboard,
   Sparkles,
@@ -18,7 +19,6 @@ import {
   ClipboardCheck,
   BookOpen,
   Activity,
-  Command,
   Menu,
 } from "lucide-react";
 
@@ -62,10 +62,7 @@ function Nav({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <div className="flex h-full flex-col">
       <div className="flex h-16 items-center gap-2 px-4">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-          <Command className="h-5 w-5" />
-        </div>
-        <span className="font-heading text-lg font-semibold tracking-tight">Virgo OS</span>
+        <img src={wordmark.url} alt="Virgo OS" className="h-8 w-auto" />
       </div>
       <Separator />
       <nav className="flex-1 overflow-auto px-3 py-4">

@@ -8,7 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
-import { Sparkles } from "lucide-react";
+import { ArrowRight, CalendarDays, Check, Moon, Sparkles, TrendingUp } from "lucide-react";
 import {
   avg,
   habitStreak,
@@ -73,10 +73,10 @@ function Index() {
     }));
 
   const stats = [
-    { label: "Open tasks", value: String(open.length) },
-    { label: "Habits today", value: `${habitDone}/${state.habits.length}` },
-    { label: "Avg sleep", value: `${avg(recent.map((h) => h.sleep)).toFixed(1)}h` },
-    { label: "Spent this month", value: `$${monthSpend(state.txns).toFixed(0)}` },
+    { label: "Open tasks", value: String(open.length), detail: "3 high priority", icon: Check },
+    { label: "Daily rhythm", value: `${habitDone}/${state.habits.length}`, detail: "habits complete", icon: TrendingUp },
+    { label: "Sleep", value: `${avg(recent.map((h) => h.sleep)).toFixed(1)}h`, detail: "7 day average", icon: Moon },
+    { label: "Monthly spend", value: `$${monthSpend(state.txns).toFixed(0)}`, detail: "across all categories", icon: CalendarDays },
   ];
 
   return (
@@ -92,39 +92,44 @@ function Index() {
         </Button>
       }
     >
-      <div className="mb-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {stats.map((s) => (
-          <Card key={s.label}>
-            <CardContent className="pt-6">
-              <p className="text-xs uppercase tracking-wider text-muted-foreground">{s.label}</p>
-              <p className="mt-1 font-heading text-2xl font-semibold tabular-nums">{s.value}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <div className="virgo-rise grid gap-4 xl:grid-cols-[minmax(0,1.65fr)_minmax(320px,0.85fr)]">
+        <div className="space-y-4">
+          <section className="relative overflow-hidden rounded-lg bg-primary px-6 py-7 text-primary-foreground shadow-xl sm:px-8 sm:py-9">
+            <div className="absolute inset-y-0 right-0 w-2/5 bg-gold/5" />
+            <div className="relative max-w-2xl">
+              <div className="mb-6 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary-foreground/45"><span className="h-1.5 w-1.5 rounded-full bg-gold" /> Daily brief</div>
+              <h2 className="font-heading text-2xl font-medium leading-tight sm:text-3xl">Protect the first half of your day for the roadmap.</h2>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-primary-foreground/58">You have {open.length} open tasks and {events.length} fixed events. Your clearest path is one meaningful block before reactive work begins.</p>
+              <Button asChild variant="secondary" className="mt-6"><Link to="/planner"><Sparkles />Build today’s plan<ArrowRight /></Link></Button>
+            </div>
+          </section>
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="lg:col-span-2">
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            {stats.map((s) => {
+              const Icon = s.icon;
+              return <Card key={s.label} className="group"><CardContent className="p-4"><div className="mb-5 flex items-center justify-between"><Icon className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-gold"/><span className="h-1.5 w-1.5 rounded-full bg-border" /></div><p className="font-heading text-2xl font-semibold tabular-nums">{s.value}</p><p className="mt-1 text-[11px] font-medium text-muted-foreground">{s.label} · {s.detail}</p></CardContent></Card>
+            })}
+          </div>
+
+          <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="font-heading text-lg">Top priorities</CardTitle>
+            <CardTitle className="flex items-center justify-between font-heading text-lg"><span>Top priorities</span><Link to="/tasks" className="font-sans text-xs font-semibold text-muted-foreground hover:text-foreground">View all</Link></CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
               {open.slice(0, 5).map((task) => {
                 const score = priorityScore(task);
                 return (
-                  <li key={task.id} className="flex items-center gap-3 rounded-lg border p-3">
+                  <li key={task.id} className="group grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 border-b py-3.5 last:border-0">
                     <Checkbox
                       id={`home-${task.id}`}
                       checked={task.done}
                       onCheckedChange={() => toggle(task.id)}
                       aria-label={task.title}
                     />
-                    <label htmlFor={`home-${task.id}`} className="min-w-0 flex-1 text-sm font-medium">
-                      {task.title}
-                      <span className="ml-2 text-xs font-normal text-muted-foreground">
-                        {task.project}
-                      </span>
+                    <label htmlFor={`home-${task.id}`} className="min-w-0 text-sm font-semibold">
+                      <span className="block truncate">{task.title}</span>
+                      <span className="mt-0.5 block text-[11px] font-medium text-muted-foreground">{task.project}</span>
                     </label>
                     <Badge className={cn("tabular-nums", priorityBand(score).tone)}>{score}</Badge>
                   </li>
@@ -132,19 +137,21 @@ function Index() {
               })}
             </ul>
           </CardContent>
-        </Card>
+          </Card>
+        </div>
 
-        <Card>
+        <aside className="space-y-4">
+        <Card className="overflow-hidden">
           <CardHeader className="pb-2">
-            <CardTitle className="font-heading text-lg">Schedule</CardTitle>
+            <CardTitle className="flex items-center justify-between font-heading text-lg"><span>Today’s flow</span><span className="text-xs font-medium text-muted-foreground">{events.length} events</span></CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             {(plan ? plan.blocks.slice(0, 6) : events).length === 0 ? (
               <p className="text-sm text-muted-foreground">Nothing scheduled yet.</p>
             ) : plan ? (
               plan.blocks.slice(0, 6).map((b, i) => (
-                <div key={i} className="flex gap-3 text-sm">
-                  <span className="w-24 shrink-0 tabular-nums text-muted-foreground">
+                 <div key={i} className="grid grid-cols-[5rem_minmax(0,1fr)] gap-3 border-l border-gold/35 py-2 pl-4 text-sm">
+                   <span className="shrink-0 text-xs font-semibold tabular-nums text-muted-foreground">
                     {b.start}–{b.end}
                   </span>
                   <span className="min-w-0 flex-1 truncate">{b.title}</span>
@@ -152,8 +159,8 @@ function Index() {
               ))
             ) : (
               events.map((e) => (
-                <div key={e.id} className="flex gap-3 text-sm">
-                  <span className="w-24 shrink-0 tabular-nums text-muted-foreground">
+                 <div key={e.id} className="grid grid-cols-[5rem_minmax(0,1fr)] gap-3 border-l border-gold/35 py-2 pl-4 text-sm">
+                   <span className="shrink-0 text-xs font-semibold tabular-nums text-muted-foreground">
                     {e.start}–{e.end}
                   </span>
                   <span className="min-w-0 flex-1 truncate">{e.title}</span>
@@ -162,6 +169,8 @@ function Index() {
             )}
           </CardContent>
         </Card>
+
+        <FocusTimer />
 
         <Card>
           <CardHeader className="pb-2">
@@ -204,7 +213,7 @@ function Index() {
           </CardContent>
         </Card>
 
-        <FocusTimer />
+        </aside>
       </div>
     </AppShell>
   );

@@ -7,8 +7,8 @@
 /*
  * Virgo OS design system.
  *
- * Brand palette: deep indigo-navy ink (#1B1636) with warm gold (#E4B45C)
- * on warm paper. Typography: Space Grotesk headings, DM Sans body.
+ * Brand palette: deep indigo-navy ink with warm gold on luminous paper.
+ * Typography: Sora headings, Manrope body.
  */
 
 @theme inline {
@@ -64,13 +64,13 @@
 :root {
   --radius: 0.75rem;
 
-  --font-body: "DM Sans", system-ui, sans-serif;
-  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+  --font-display: "Sora", system-ui, sans-serif;
 
   /* Brand — light mode */
-  --background: oklch(0.972 0.006 85);
+  --background: oklch(0.975 0.009 86);
   --foreground: oklch(0.212 0.056 285.5);
-  --card: oklch(0.99 0.004 90);
+  --card: oklch(0.995 0.004 90 / 82%);
   --card-foreground: oklch(0.212 0.056 285.5);
   --popover: oklch(0.99 0.004 90);
   --popover-foreground: oklch(0.212 0.056 285.5);
@@ -86,8 +86,8 @@
   --gold-foreground: oklch(0.212 0.056 285.5);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.9 0.014 82);
-  --input: oklch(0.9 0.014 82);
+  --border: oklch(0.87 0.018 82 / 78%);
+  --input: oklch(0.87 0.018 82 / 78%);
   --ring: oklch(0.79 0.106 80.5 / 55%);
   --chart-1: oklch(0.212 0.056 285.5);
   --chart-2: oklch(0.79 0.106 80.5);
@@ -158,5 +158,31 @@
     font-feature-settings: "cv11", "ss01";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-image:
+      radial-gradient(circle at 76% 6%, color-mix(in oklab, var(--gold) 12%, transparent), transparent 25rem),
+      linear-gradient(145deg, color-mix(in oklab, var(--background) 96%, white), var(--background));
+    background-attachment: fixed;
   }
+}
+
+@utility glass-panel {
+  background: color-mix(in oklab, var(--card) 88%, transparent);
+  border: 1px solid color-mix(in oklab, var(--border) 72%, transparent);
+  box-shadow: 0 24px 70px -44px color-mix(in oklab, var(--foreground) 34%, transparent);
+  backdrop-filter: blur(24px) saturate(125%);
+}
+
+@utility premium-panel {
+  background: linear-gradient(145deg, color-mix(in oklab, var(--card) 96%, white), color-mix(in oklab, var(--card) 86%, transparent));
+  border: 1px solid color-mix(in oklab, var(--border) 72%, transparent);
+  box-shadow: 0 20px 55px -42px color-mix(in oklab, var(--foreground) 38%, transparent);
+}
+
+@keyframes virgo-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .virgo-rise { animation: virgo-rise 480ms cubic-bezier(.2,.8,.2,1) both; }
 }

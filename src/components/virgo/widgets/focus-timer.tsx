@@ -35,33 +35,33 @@ export function FocusTimer() {
   const progress = ((FOCUS_SECONDS - seconds) / FOCUS_SECONDS) * 100;
 
   return (
-    <Card>
+    <Card className="overflow-hidden border-primary/10 bg-primary text-primary-foreground">
       <CardHeader className="pb-2">
-        <CardTitle className="font-heading text-lg">Focus</CardTitle>
+         <CardTitle className="flex items-center justify-between font-heading text-lg"><span>Focus session</span><span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-gold">Deep work</span></CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="text-center">
-          <div className="font-heading text-4xl font-semibold tracking-tight">
+           <div className="font-heading text-5xl font-medium tabular-nums">
             {formatTime(seconds)}
           </div>
-          <p className="text-xs text-muted-foreground">Pomodoro session</p>
+           <p className="mt-1 text-xs text-primary-foreground/50">25 minute focus block</p>
         </div>
-        <div className="h-1.5 overflow-hidden rounded-full bg-secondary">
+         <div className="h-1 overflow-hidden rounded-full bg-primary-foreground/10">
           <div
-            className="h-full bg-primary transition-all duration-1000"
+             className="h-full bg-gold transition-all duration-1000"
             style={{ width: `${progress}%` }}
           />
         </div>
         <div className="flex justify-center gap-2">
           <Button
-            variant="outline"
+             variant="secondary"
             size="icon"
             onClick={() => setRunning((r) => !r)}
             aria-label={running ? "Pause" : "Start"}
           >
             {running ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
           </Button>
-          <Button variant="outline" size="icon" onClick={reset} aria-label="Reset">
+           <Button variant="secondary" size="icon" onClick={reset} aria-label="Reset">
             <RotateCcw className="h-4 w-4" />
           </Button>
         </div>

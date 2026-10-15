@@ -22,7 +22,7 @@ import {
   weekDates,
 } from "@/lib/store";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/_authenticated/dashboard")({
   component: Index,
   head: () => ({
     meta: [

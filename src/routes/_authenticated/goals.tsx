@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
 import { setState, useVirgo } from "@/lib/store";
 
-export const Route = createFileRoute("/goals")({
+export const Route = createFileRoute("/_authenticated/goals")({
   component: GoalsPage,
   head: () => ({
     meta: [

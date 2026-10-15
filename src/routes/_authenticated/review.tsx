@@ -8,7 +8,7 @@ import { Loader2, Sparkles } from "lucide-react";
 import { generateWeeklyReview } from "@/lib/ai.functions";
 import { contextSnapshot, setState, today, uid, useVirgo } from "@/lib/store";
 
-export const Route = createFileRoute("/review")({
+export const Route = createFileRoute("/_authenticated/review")({
   component: ReviewPage,
   head: () => ({
     meta: [

@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { Flame, Plus, Trash2 } from "lucide-react";
 import { habitStreak, setState, uid, useVirgo, weekDates } from "@/lib/store";
 
-export const Route = createFileRoute("/habits")({
+export const Route = createFileRoute("/_authenticated/habits")({
   component: HabitsPage,
   head: () => ({
     meta: [

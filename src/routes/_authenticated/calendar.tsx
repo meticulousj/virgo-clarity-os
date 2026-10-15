@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, Trash2 } from "lucide-react";
 import { daysAgo, setState, today, uid, useVirgo } from "@/lib/store";
 
-export const Route = createFileRoute("/calendar")({
+export const Route = createFileRoute("/_authenticated/calendar")({
   component: CalendarPage,
   head: () => ({
     meta: [

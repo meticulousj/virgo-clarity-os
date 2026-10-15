@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Plus } from "lucide-react";
 import { monthSpend, setState, spendByCategory, today, uid, useVirgo } from "@/lib/store";
 
-export const Route = createFileRoute("/budget")({
+export const Route = createFileRoute("/_authenticated/budget")({
   component: BudgetPage,
   head: () => ({
     meta: [

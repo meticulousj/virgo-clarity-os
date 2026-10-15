@@ -19,7 +19,7 @@ import {
   type HealthLog,
 } from "@/lib/store";
 
-export const Route = createFileRoute("/insights")({
+export const Route = createFileRoute("/_authenticated/insights")({
   component: InsightsPage,
   head: () => ({
     meta: [

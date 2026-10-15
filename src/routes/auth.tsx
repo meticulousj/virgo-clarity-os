@@ -16,7 +16,7 @@ function sanitizeRedirect(value: unknown): string {
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>) => ({
-    redirect: sanitizeRedirect(search.redirect),
+    redirect: search.redirect == null ? undefined : sanitizeRedirect(search["redirect"]),
   }),
   head: () => ({
     meta: [
@@ -32,7 +32,8 @@ export const Route = createFileRoute("/auth")({
 });
 
 function AuthPage() {
-  const { redirect: redirectTo } = Route.useSearch();
+  const { redirect: rawRedirect } = Route.useSearch();
+  const redirectTo = rawRedirect ?? "/dashboard";
   const navigate = useNavigate();
   const [email, setEmail] = React.useState("");
   const [status, setStatus] = React.useState<"idle" | "sending" | "sent" | "error">("idle");

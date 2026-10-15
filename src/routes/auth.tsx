@@ -15,9 +15,8 @@ function sanitizeRedirect(value: unknown): string {
 }
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    redirect: search["redirect"] == null ? undefined : sanitizeRedirect(search["redirect"]),
-  }),
+  validateSearch: (search: Record<string, unknown>): { redirect?: string } =>
+    search["redirect"] == null ? {} : { redirect: sanitizeRedirect(search["redirect"]) },
   head: () => ({
     meta: [
       { title: "Sign in — Virgo OS" },

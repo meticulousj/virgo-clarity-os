@@ -1,11 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import type { User } from "@supabase/supabase-js";
 const WORDMARK_URL = "/virgo-wordmark.png";
 import {
   LayoutDashboard,
@@ -22,6 +24,7 @@ import {
   Menu,
   Search,
   Command,
+  LogOut,
 } from "lucide-react";
 
 type NavLink = { to: string; label: string; icon: React.ElementType };
@@ -30,7 +33,7 @@ const GROUPS: { title: string; items: NavLink[] }[] = [
   {
     title: "Today",
     items: [
-      { to: "/", label: "Dashboard", icon: LayoutDashboard },
+      { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
       { to: "/planner", label: "AI Planner", icon: Sparkles },
       { to: "/calendar", label: "Calendar", icon: CalendarDays },
     ],
@@ -98,14 +101,60 @@ function Nav({ onNavigate }: { onNavigate?: () => void }) {
           </div>
         ))}
       </nav>
-      <div className="border-t border-sidebar-border p-4">
-        <div className="flex items-center gap-3">
-           <div className="grid h-9 w-9 place-items-center rounded-full border border-gold/25 bg-gold/10 font-heading text-xs font-semibold text-gold">AM</div>
-          <div className="flex-1 overflow-hidden">
-            <p className="truncate text-sm font-medium">Alex Morgan</p>
-             <p className="truncate text-xs text-sidebar-foreground/40">Personal workspace</p>
-          </div>
+      <UserFooter />
+    </div>
+  );
+}
+
+function UserFooter() {
+  const navigate = useNavigate();
+  const [user, setUser] = React.useState<User | null>(null);
+  const [displayName, setDisplayName] = React.useState<string>("");
+
+  React.useEffect(() => {
+    let cancelled = false;
+    supabase.auth.getUser().then(async ({ data }) => {
+      if (cancelled || !data.user) return;
+      setUser(data.user);
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("display_name")
+        .eq("id", data.user.id)
+        .maybeSingle();
+      if (!cancelled && profile?.display_name) setDisplayName(profile.display_name);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  async function handleSignOut() {
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  }
+
+  const name = displayName || user?.email?.split("@")[0] || "Account";
+  const initials = name
+    .split(/[\s._-]+/)
+    .map((p) => p[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
+  return (
+    <div className="border-t border-sidebar-border p-4">
+      <div className="flex items-center gap-3">
+        <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-gold/25 bg-gold/10 font-heading text-xs font-semibold text-gold">
+          {initials || "·"}
         </div>
+        <div className="flex-1 overflow-hidden">
+          <p className="truncate text-sm font-medium">{name}</p>
+          <p className="truncate text-xs text-sidebar-foreground/40">{user?.email ?? "Personal workspace"}</p>
+        </div>
+        <Button variant="ghost" size="icon" aria-label="Sign out" onClick={handleSignOut}>
+          <LogOut className="h-4 w-4" />
+        </Button>
       </div>
     </div>
   );

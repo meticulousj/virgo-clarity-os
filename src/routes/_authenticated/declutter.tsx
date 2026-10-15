@@ -7,7 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { setState, useVirgo } from "@/lib/store";
 
-export const Route = createFileRoute("/declutter")({
+export const Route = createFileRoute("/_authenticated/declutter")({
   component: DeclutterPage,
   head: () => ({
     meta: [

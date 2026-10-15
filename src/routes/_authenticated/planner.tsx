@@ -9,7 +9,7 @@ import { Sparkles, Loader2, Clock } from "lucide-react";
 import { generateDailyPlan } from "@/lib/ai.functions";
 import { contextSnapshot, setState, today, useVirgo } from "@/lib/store";
 
-export const Route = createFileRoute("/planner")({
+export const Route = createFileRoute("/_authenticated/planner")({
   component: PlannerPage,
   head: () => ({
     meta: [

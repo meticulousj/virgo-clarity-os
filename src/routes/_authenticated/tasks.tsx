@@ -20,7 +20,7 @@ import {
   useVirgo,
 } from "@/lib/store";
 
-export const Route = createFileRoute("/tasks")({
+export const Route = createFileRoute("/_authenticated/tasks")({
   component: TasksPage,
   head: () => ({
     meta: [

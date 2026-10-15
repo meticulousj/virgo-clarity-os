@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { setState, today, uid, useVirgo } from "@/lib/store";
 
-export const Route = createFileRoute("/journal")({
+export const Route = createFileRoute("/_authenticated/journal")({
   component: JournalPage,
   head: () => ({
     meta: [

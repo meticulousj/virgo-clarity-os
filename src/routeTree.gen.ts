@@ -10,119 +10,145 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as BudgetRouteImport } from './routes/budget'
-import { Route as CalendarRouteImport } from './routes/calendar'
-import { Route as DeclutterRouteImport } from './routes/declutter'
-import { Route as GoalsRouteImport } from './routes/goals'
-import { Route as HabitsRouteImport } from './routes/habits'
-import { Route as InsightsRouteImport } from './routes/insights'
-import { Route as JournalRouteImport } from './routes/journal'
-import { Route as PlannerRouteImport } from './routes/planner'
-import { Route as ReviewRouteImport } from './routes/review'
-import { Route as TasksRouteImport } from './routes/tasks'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedBudgetRouteImport } from './routes/_authenticated/budget'
+import { Route as AuthenticatedCalendarRouteImport } from './routes/_authenticated/calendar'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedDeclutterRouteImport } from './routes/_authenticated/declutter'
+import { Route as AuthenticatedGoalsRouteImport } from './routes/_authenticated/goals'
+import { Route as AuthenticatedHabitsRouteImport } from './routes/_authenticated/habits'
+import { Route as AuthenticatedInsightsRouteImport } from './routes/_authenticated/insights'
+import { Route as AuthenticatedJournalRouteImport } from './routes/_authenticated/journal'
+import { Route as AuthenticatedPlannerRouteImport } from './routes/_authenticated/planner'
+import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
+import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/tasks'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BudgetRoute = BudgetRouteImport.update({
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedBudgetRoute = AuthenticatedBudgetRouteImport.update({
   id: '/budget',
   path: '/budget',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const CalendarRoute = CalendarRouteImport.update({
+const AuthenticatedCalendarRoute = AuthenticatedCalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const DeclutterRoute = DeclutterRouteImport.update({
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDeclutterRoute = AuthenticatedDeclutterRouteImport.update({
   id: '/declutter',
   path: '/declutter',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const GoalsRoute = GoalsRouteImport.update({
+const AuthenticatedGoalsRoute = AuthenticatedGoalsRouteImport.update({
   id: '/goals',
   path: '/goals',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const HabitsRoute = HabitsRouteImport.update({
+const AuthenticatedHabitsRoute = AuthenticatedHabitsRouteImport.update({
   id: '/habits',
   path: '/habits',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const InsightsRoute = InsightsRouteImport.update({
+const AuthenticatedInsightsRoute = AuthenticatedInsightsRouteImport.update({
   id: '/insights',
   path: '/insights',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const JournalRoute = JournalRouteImport.update({
+const AuthenticatedJournalRoute = AuthenticatedJournalRouteImport.update({
   id: '/journal',
   path: '/journal',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const PlannerRoute = PlannerRouteImport.update({
+const AuthenticatedPlannerRoute = AuthenticatedPlannerRouteImport.update({
   id: '/planner',
   path: '/planner',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const ReviewRoute = ReviewRouteImport.update({
+const AuthenticatedReviewRoute = AuthenticatedReviewRouteImport.update({
   id: '/review',
   path: '/review',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const TasksRoute = TasksRouteImport.update({
+const AuthenticatedTasksRoute = AuthenticatedTasksRouteImport.update({
   id: '/tasks',
   path: '/tasks',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/budget': typeof BudgetRoute
-  '/calendar': typeof CalendarRoute
-  '/declutter': typeof DeclutterRoute
-  '/goals': typeof GoalsRoute
-  '/habits': typeof HabitsRoute
-  '/insights': typeof InsightsRoute
-  '/journal': typeof JournalRoute
-  '/planner': typeof PlannerRoute
-  '/review': typeof ReviewRoute
-  '/tasks': typeof TasksRoute
+  '/auth': typeof AuthRoute
+  '/budget': typeof AuthenticatedBudgetRoute
+  '/calendar': typeof AuthenticatedCalendarRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/declutter': typeof AuthenticatedDeclutterRoute
+  '/goals': typeof AuthenticatedGoalsRoute
+  '/habits': typeof AuthenticatedHabitsRoute
+  '/insights': typeof AuthenticatedInsightsRoute
+  '/journal': typeof AuthenticatedJournalRoute
+  '/planner': typeof AuthenticatedPlannerRoute
+  '/review': typeof AuthenticatedReviewRoute
+  '/tasks': typeof AuthenticatedTasksRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/budget': typeof BudgetRoute
-  '/calendar': typeof CalendarRoute
-  '/declutter': typeof DeclutterRoute
-  '/goals': typeof GoalsRoute
-  '/habits': typeof HabitsRoute
-  '/insights': typeof InsightsRoute
-  '/journal': typeof JournalRoute
-  '/planner': typeof PlannerRoute
-  '/review': typeof ReviewRoute
-  '/tasks': typeof TasksRoute
+  '/auth': typeof AuthRoute
+  '/budget': typeof AuthenticatedBudgetRoute
+  '/calendar': typeof AuthenticatedCalendarRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/declutter': typeof AuthenticatedDeclutterRoute
+  '/goals': typeof AuthenticatedGoalsRoute
+  '/habits': typeof AuthenticatedHabitsRoute
+  '/insights': typeof AuthenticatedInsightsRoute
+  '/journal': typeof AuthenticatedJournalRoute
+  '/planner': typeof AuthenticatedPlannerRoute
+  '/review': typeof AuthenticatedReviewRoute
+  '/tasks': typeof AuthenticatedTasksRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/budget': typeof BudgetRoute
-  '/calendar': typeof CalendarRoute
-  '/declutter': typeof DeclutterRoute
-  '/goals': typeof GoalsRoute
-  '/habits': typeof HabitsRoute
-  '/insights': typeof InsightsRoute
-  '/journal': typeof JournalRoute
-  '/planner': typeof PlannerRoute
-  '/review': typeof ReviewRoute
-  '/tasks': typeof TasksRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/budget': typeof AuthenticatedBudgetRoute
+  '/_authenticated/calendar': typeof AuthenticatedCalendarRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/declutter': typeof AuthenticatedDeclutterRoute
+  '/_authenticated/goals': typeof AuthenticatedGoalsRoute
+  '/_authenticated/habits': typeof AuthenticatedHabitsRoute
+  '/_authenticated/insights': typeof AuthenticatedInsightsRoute
+  '/_authenticated/journal': typeof AuthenticatedJournalRoute
+  '/_authenticated/planner': typeof AuthenticatedPlannerRoute
+  '/_authenticated/review': typeof AuthenticatedReviewRoute
+  '/_authenticated/tasks': typeof AuthenticatedTasksRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/budget'
     | '/calendar'
+    | '/dashboard'
     | '/declutter'
     | '/goals'
     | '/habits'
@@ -134,8 +160,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/budget'
     | '/calendar'
+    | '/dashboard'
     | '/declutter'
     | '/goals'
     | '/habits'
@@ -147,30 +175,25 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/budget'
-    | '/calendar'
-    | '/declutter'
-    | '/goals'
-    | '/habits'
-    | '/insights'
-    | '/journal'
-    | '/planner'
-    | '/review'
-    | '/tasks'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/budget'
+    | '/_authenticated/calendar'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/declutter'
+    | '/_authenticated/goals'
+    | '/_authenticated/habits'
+    | '/_authenticated/insights'
+    | '/_authenticated/journal'
+    | '/_authenticated/planner'
+    | '/_authenticated/review'
+    | '/_authenticated/tasks'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  BudgetRoute: typeof BudgetRoute
-  CalendarRoute: typeof CalendarRoute
-  DeclutterRoute: typeof DeclutterRoute
-  GoalsRoute: typeof GoalsRoute
-  HabitsRoute: typeof HabitsRoute
-  InsightsRoute: typeof InsightsRoute
-  JournalRoute: typeof JournalRoute
-  PlannerRoute: typeof PlannerRoute
-  ReviewRoute: typeof ReviewRoute
-  TasksRoute: typeof TasksRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -182,91 +205,135 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/budget': {
-      id: '/budget'
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/budget': {
+      id: '/_authenticated/budget'
       path: '/budget'
       fullPath: '/budget'
-      preLoaderRoute: typeof BudgetRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedBudgetRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/calendar': {
-      id: '/calendar'
+    '/_authenticated/calendar': {
+      id: '/_authenticated/calendar'
       path: '/calendar'
       fullPath: '/calendar'
-      preLoaderRoute: typeof CalendarRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedCalendarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/declutter': {
-      id: '/declutter'
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/declutter': {
+      id: '/_authenticated/declutter'
       path: '/declutter'
       fullPath: '/declutter'
-      preLoaderRoute: typeof DeclutterRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedDeclutterRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/goals': {
-      id: '/goals'
+    '/_authenticated/goals': {
+      id: '/_authenticated/goals'
       path: '/goals'
       fullPath: '/goals'
-      preLoaderRoute: typeof GoalsRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedGoalsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/habits': {
-      id: '/habits'
+    '/_authenticated/habits': {
+      id: '/_authenticated/habits'
       path: '/habits'
       fullPath: '/habits'
-      preLoaderRoute: typeof HabitsRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedHabitsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/insights': {
-      id: '/insights'
+    '/_authenticated/insights': {
+      id: '/_authenticated/insights'
       path: '/insights'
       fullPath: '/insights'
-      preLoaderRoute: typeof InsightsRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedInsightsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/journal': {
-      id: '/journal'
+    '/_authenticated/journal': {
+      id: '/_authenticated/journal'
       path: '/journal'
       fullPath: '/journal'
-      preLoaderRoute: typeof JournalRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedJournalRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/planner': {
-      id: '/planner'
+    '/_authenticated/planner': {
+      id: '/_authenticated/planner'
       path: '/planner'
       fullPath: '/planner'
-      preLoaderRoute: typeof PlannerRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedPlannerRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/review': {
-      id: '/review'
+    '/_authenticated/review': {
+      id: '/_authenticated/review'
       path: '/review'
       fullPath: '/review'
-      preLoaderRoute: typeof ReviewRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedReviewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/tasks': {
-      id: '/tasks'
+    '/_authenticated/tasks': {
+      id: '/_authenticated/tasks'
       path: '/tasks'
       fullPath: '/tasks'
-      preLoaderRoute: typeof TasksRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedTasksRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBudgetRoute: typeof AuthenticatedBudgetRoute
+  AuthenticatedCalendarRoute: typeof AuthenticatedCalendarRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDeclutterRoute: typeof AuthenticatedDeclutterRoute
+  AuthenticatedGoalsRoute: typeof AuthenticatedGoalsRoute
+  AuthenticatedHabitsRoute: typeof AuthenticatedHabitsRoute
+  AuthenticatedInsightsRoute: typeof AuthenticatedInsightsRoute
+  AuthenticatedJournalRoute: typeof AuthenticatedJournalRoute
+  AuthenticatedPlannerRoute: typeof AuthenticatedPlannerRoute
+  AuthenticatedReviewRoute: typeof AuthenticatedReviewRoute
+  AuthenticatedTasksRoute: typeof AuthenticatedTasksRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBudgetRoute: AuthenticatedBudgetRoute,
+  AuthenticatedCalendarRoute: AuthenticatedCalendarRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDeclutterRoute: AuthenticatedDeclutterRoute,
+  AuthenticatedGoalsRoute: AuthenticatedGoalsRoute,
+  AuthenticatedHabitsRoute: AuthenticatedHabitsRoute,
+  AuthenticatedInsightsRoute: AuthenticatedInsightsRoute,
+  AuthenticatedJournalRoute: AuthenticatedJournalRoute,
+  AuthenticatedPlannerRoute: AuthenticatedPlannerRoute,
+  AuthenticatedReviewRoute: AuthenticatedReviewRoute,
+  AuthenticatedTasksRoute: AuthenticatedTasksRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  BudgetRoute: BudgetRoute,
-  CalendarRoute: CalendarRoute,
-  DeclutterRoute: DeclutterRoute,
-  GoalsRoute: GoalsRoute,
-  HabitsRoute: HabitsRoute,
-  InsightsRoute: InsightsRoute,
-  JournalRoute: JournalRoute,
-  PlannerRoute: PlannerRoute,
-  ReviewRoute: ReviewRoute,
-  TasksRoute: TasksRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

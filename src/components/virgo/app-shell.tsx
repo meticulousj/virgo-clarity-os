@@ -22,8 +22,6 @@ import {
   BookOpen,
   Activity,
   Menu,
-  Search,
-  Command,
   LogOut,
 } from "lucide-react";
 
@@ -67,13 +65,13 @@ function Nav({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <div className="flex h-full flex-col text-sidebar-foreground">
       <div className="flex h-20 items-center gap-2 px-5">
-        <img src={WORDMARK_URL} alt="Virgo OS" className="h-9 w-auto brightness-0 invert" />
+        <img src={WORDMARK_URL} alt="Virgo OS" className="h-9 w-auto dark:brightness-0 dark:invert" />
       </div>
       <Separator />
       <nav className="flex-1 overflow-auto px-3 py-5">
         {GROUPS.map((group) => (
           <div key={group.title} className="mb-5">
-            <p className="px-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-sidebar-foreground/40">
+            <p className="px-3 text-[10px] font-semibold uppercase text-sidebar-foreground/60">
               {group.title}
             </p>
             <div className="mt-2 space-y-1">
@@ -89,11 +87,12 @@ function Nav({ onNavigate }: { onNavigate?: () => void }) {
                        "group flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-all",
                       active
                          ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
-                         : "text-sidebar-foreground/58 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                         : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                     )}
                   >
-                    <Icon className={cn("h-4 w-4", active ? "text-gold" : "text-sidebar-foreground/45 group-hover:text-gold")} />
+                    <Icon className={cn("h-4 w-4", active ? "text-gold" : "text-sidebar-foreground/55 group-hover:text-sidebar-foreground")} />
                     {item.label}
+                    {active ? <span className="ml-auto h-1 w-1 rounded-full bg-gold" /> : null}
                   </Link>
                 );
               })}
@@ -150,9 +149,9 @@ function UserFooter() {
         </div>
         <div className="flex-1 overflow-hidden">
           <p className="truncate text-sm font-medium">{name}</p>
-          <p className="truncate text-xs text-sidebar-foreground/40">{user?.email ?? "Personal workspace"}</p>
+          <p className="truncate text-xs text-sidebar-foreground/60">{user?.email ?? "Personal workspace"}</p>
         </div>
-        <Button variant="ghost" size="icon" aria-label="Sign out" onClick={handleSignOut}>
+        <Button variant="ghost" size="icon" aria-label="Sign out" title="Sign out" onClick={handleSignOut}>
           <LogOut className="h-4 w-4" />
         </Button>
       </div>
@@ -182,30 +181,27 @@ export function AppShell({
       <div className="fixed left-0 right-0 top-0 z-30 grid h-16 grid-cols-[auto_minmax(0,1fr)] items-center border-b bg-background/85 px-4 backdrop-blur-xl lg:hidden">
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" aria-label="Open menu">
+            <Button variant="ghost" size="icon" aria-label="Open menu" title="Open menu">
               <Menu className="h-5 w-5" />
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-60 p-0">
+          <SheetContent side="left" className="w-64 bg-sidebar p-0" aria-label="Navigation">
             <Nav onNavigate={() => setOpen(false)} />
           </SheetContent>
         </Sheet>
-         <img src={WORDMARK_URL} alt="Virgo OS" className="ml-3 h-7 w-auto" />
+         <img src={WORDMARK_URL} alt="Virgo OS" className="ml-3 h-7 w-auto dark:brightness-0 dark:invert" />
       </div>
 
       <main className="pt-16 lg:pl-64 lg:pt-0">
         <div className="mx-auto max-w-[1480px] p-4 sm:p-6 lg:p-8 xl:p-10">
-          <div className="mb-7 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4 sm:flex sm:justify-between">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-border/70 pb-6">
             <div className="min-w-0">
-              <p className="mb-2 hidden items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted-foreground sm:flex"><span className="h-1.5 w-1.5 rounded-full bg-gold" /> Personal operating system</p>
-              <h1 className="truncate font-heading text-2xl font-semibold sm:text-3xl">
+              <h1 className="break-words font-heading text-2xl font-semibold leading-tight sm:text-3xl">
                 {title}
               </h1>
               {subtitle ? <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p> : null}
             </div>
             <div className="flex shrink-0 items-center gap-2">
-              <Button variant="outline" size="icon" className="hidden sm:inline-flex" aria-label="Search"><Search /></Button>
-              <Button variant="outline" size="icon" className="hidden sm:inline-flex" aria-label="Commands"><Command /></Button>
               {actions}
             </div>
           </div>

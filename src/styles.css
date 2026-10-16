@@ -62,15 +62,17 @@
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.5rem;
+  --shadow-panel: 0 2px 8px -4px color-mix(in oklab, var(--foreground) 14%, transparent);
+  --photo-scrim: linear-gradient(90deg, color-mix(in oklab, var(--background) 94%, transparent), color-mix(in oklab, var(--background) 70%, transparent) 65%, transparent);
 
   --font-body: "Manrope", system-ui, sans-serif;
   --font-display: "Sora", system-ui, sans-serif;
 
   /* Brand — light mode */
-  --background: oklch(0.975 0.009 86);
+  --background: oklch(0.98 0.004 86);
   --foreground: oklch(0.212 0.056 285.5);
-  --card: oklch(0.995 0.004 90 / 82%);
+  --card: oklch(0.995 0.002 90 / 94%);
   --card-foreground: oklch(0.212 0.056 285.5);
   --popover: oklch(0.99 0.004 90);
   --popover-foreground: oklch(0.212 0.056 285.5);
@@ -79,7 +81,7 @@
   --secondary: oklch(0.928 0.012 80);
   --secondary-foreground: oklch(0.212 0.056 285.5);
   --muted: oklch(0.928 0.012 80);
-  --muted-foreground: oklch(0.52 0.022 285.5);
+  --muted-foreground: oklch(0.47 0.022 285.5);
   --accent: oklch(0.79 0.106 80.5);
   --accent-foreground: oklch(0.212 0.056 285.5);
   --gold: oklch(0.79 0.106 80.5);
@@ -158,10 +160,16 @@
     font-feature-settings: "cv11", "ss01";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-image:
-      radial-gradient(circle at 76% 6%, color-mix(in oklab, var(--gold) 12%, transparent), transparent 25rem),
-      linear-gradient(145deg, color-mix(in oklab, var(--background) 96%, white), var(--background));
-    background-attachment: fixed;
+    letter-spacing: 0;
+  }
+
+  h1, h2, h3, h4, button, a, p, span, div {
+    letter-spacing: 0;
+  }
+
+  ::selection {
+    background: var(--gold);
+    color: var(--gold-foreground);
   }
 }
 
@@ -173,9 +181,24 @@
 }
 
 @utility premium-panel {
-  background: linear-gradient(145deg, color-mix(in oklab, var(--card) 96%, white), color-mix(in oklab, var(--card) 86%, transparent));
+  background: var(--card);
   border: 1px solid color-mix(in oklab, var(--border) 72%, transparent);
-  box-shadow: 0 20px 55px -42px color-mix(in oklab, var(--foreground) 38%, transparent);
+  box-shadow: var(--shadow-panel);
+}
+
+@utility photo-scrim {
+  background: var(--photo-scrim);
+}
+
+@utility focus-panel {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
 }
 
 @keyframes virgo-rise {

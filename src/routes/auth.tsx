@@ -3,8 +3,8 @@ import * as React from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent } from "@/components/ui/card";
 import { MailCheck, Sparkles } from "lucide-react";
+import workspaceImage from "@/assets/focus-workspace.jpg";
 
 const WORDMARK_URL = "/virgo-wordmark.png";
 
@@ -63,15 +63,13 @@ function AuthPage() {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 h-[480px] w-[720px] -translate-x-1/2 rounded-full bg-gold/10 blur-3xl"
-      />
-      <Card className="relative w-full max-w-md border-border/60 shadow-xl">
-        <CardContent className="p-8 sm:p-10">
+    <div className="relative isolate flex min-h-screen items-center justify-center bg-background px-5 py-12">
+      <img src={workspaceImage} alt="" width={1536} height={1024} className="absolute inset-0 -z-20 h-full w-full object-cover opacity-25" />
+      <div className="absolute inset-0 -z-10 bg-background/80" />
+      <main className="w-full max-w-sm">
           <div className="mb-8 flex flex-col items-center text-center">
-            <img src={WORDMARK_URL} alt="Virgo OS" className="h-10 w-auto" />
+            <img src={WORDMARK_URL} alt="Virgo OS" className="h-10 w-auto dark:brightness-0 dark:invert" />
+            {status !== "sent" ? <h1 className="mt-10 font-heading text-3xl font-semibold">Welcome back.</h1> : null}
             <p className="mt-4 text-sm text-muted-foreground">
               Your personal operating system for clarity and execution.
             </p>
@@ -119,8 +117,7 @@ function AuthPage() {
               </p>
             </form>
           )}
-        </CardContent>
-      </Card>
+      </main>
     </div>
   );
 }

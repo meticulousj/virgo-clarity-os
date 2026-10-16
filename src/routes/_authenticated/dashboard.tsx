@@ -26,15 +26,15 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Virgo OS — Clarity & Execution" },
+      { title: "Today — Virgo OS" },
       {
         name: "description",
-        content: "Your all-in-one personal operating system for clarity and execution.",
+        content: "Your daily priorities, schedule, habits, and focus in one clear view.",
       },
-      { property: "og:title", content: "Virgo OS — Clarity & Execution" },
+      { property: "og:title", content: "Today — Virgo OS" },
       {
         property: "og:description",
-        content: "Your all-in-one personal operating system for clarity and execution.",
+        content: "Your daily priorities, schedule, habits, and focus in one clear view.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -92,22 +92,21 @@ function Index() {
         </Button>
       }
     >
-      <div className="virgo-rise grid gap-4 xl:grid-cols-[minmax(0,1.65fr)_minmax(320px,0.85fr)]">
-        <div className="space-y-4">
-          <section className="relative overflow-hidden rounded-lg bg-primary px-6 py-7 text-primary-foreground shadow-xl sm:px-8 sm:py-9">
-            <div className="absolute inset-y-0 right-0 w-2/5 bg-gold/5" />
+      <div className="virgo-rise grid gap-6 xl:grid-cols-[minmax(0,1.65fr)_minmax(300px,0.85fr)]">
+        <div className="space-y-6">
+          <section className="relative border-l-2 border-gold py-3 pl-5 sm:py-5 sm:pl-6">
             <div className="relative max-w-2xl">
-              <div className="mb-6 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-primary-foreground/45"><span className="h-1.5 w-1.5 rounded-full bg-gold" /> Daily brief</div>
+              <div className="mb-4 text-[10px] font-semibold uppercase text-muted-foreground">Daily brief</div>
               <h2 className="font-heading text-2xl font-medium leading-tight sm:text-3xl">Protect the first half of your day for the roadmap.</h2>
-              <p className="mt-3 max-w-xl text-sm leading-6 text-primary-foreground/58">You have {open.length} open tasks and {events.length} fixed events. Your clearest path is one meaningful block before reactive work begins.</p>
-              <Button asChild variant="secondary" className="mt-6"><Link to="/planner"><Sparkles />Build today’s plan<ArrowRight /></Link></Button>
+              <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground">You have {open.length} open tasks and {events.length} fixed events. Your clearest path is one meaningful block before reactive work begins.</p>
+              <Button asChild variant="link" className="mt-3 px-0"><Link to="/planner">Build today’s plan<ArrowRight /></Link></Button>
             </div>
           </section>
 
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             {stats.map((s) => {
               const Icon = s.icon;
-              return <Card key={s.label} className="group"><CardContent className="p-4"><div className="mb-5 flex items-center justify-between"><Icon className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-gold"/><span className="h-1.5 w-1.5 rounded-full bg-border" /></div><p className="font-heading text-2xl font-semibold tabular-nums">{s.value}</p><p className="mt-1 text-[11px] font-medium text-muted-foreground">{s.label} · {s.detail}</p></CardContent></Card>
+              return <Card key={s.label} className="group"><CardContent className="p-4"><div className="mb-4 flex items-center justify-between gap-2"><span className="text-[11px] font-medium text-muted-foreground">{s.label}</span><Icon className="h-4 w-4 shrink-0 text-muted-foreground"/></div><p className="font-heading text-2xl font-semibold tabular-nums">{s.value}</p><p className="mt-2 text-[10px] leading-4 text-muted-foreground">{s.detail}</p></CardContent></Card>
             })}
           </div>
 
@@ -128,7 +127,7 @@ function Index() {
                       aria-label={task.title}
                     />
                     <label htmlFor={`home-${task.id}`} className="min-w-0 text-sm font-semibold">
-                      <span className="block truncate">{task.title}</span>
+                      <span className="block break-words">{task.title}</span>
                       <span className="mt-0.5 block text-[11px] font-medium text-muted-foreground">{task.project}</span>
                     </label>
                     <Badge className={cn("tabular-nums", priorityBand(score).tone)}>{score}</Badge>
@@ -140,7 +139,7 @@ function Index() {
           </Card>
         </div>
 
-        <aside className="space-y-4">
+        <aside className="space-y-6">
         <Card className="overflow-hidden">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center justify-between font-heading text-lg"><span>Today’s flow</span><span className="text-xs font-medium text-muted-foreground">{events.length} events</span></CardTitle>
@@ -154,7 +153,7 @@ function Index() {
                    <span className="shrink-0 text-xs font-semibold tabular-nums text-muted-foreground">
                     {b.start}–{b.end}
                   </span>
-                  <span className="min-w-0 flex-1 truncate">{b.title}</span>
+                  <span className="min-w-0 break-words">{b.title}</span>
                 </div>
               ))
             ) : (
@@ -163,7 +162,7 @@ function Index() {
                    <span className="shrink-0 text-xs font-semibold tabular-nums text-muted-foreground">
                     {e.start}–{e.end}
                   </span>
-                  <span className="min-w-0 flex-1 truncate">{e.title}</span>
+                  <span className="min-w-0 break-words">{e.title}</span>
                 </div>
               ))
             )}
@@ -202,7 +201,7 @@ function Index() {
             {state.goals.map((g) => (
               <div key={g.id}>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="truncate">{g.title}</span>
+                    <span className="min-w-0 break-words pr-3">{g.title}</span>
                   <span className="text-xs tabular-nums text-muted-foreground">
                     {Math.round((g.current / g.target) * 100)}%
                   </span>

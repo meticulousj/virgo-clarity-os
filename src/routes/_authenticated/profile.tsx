@@ -60,7 +60,7 @@ function ProfilePage() {
   React.useEffect(() => {
     if (!profile) return;
     setName(profile.displayName);
-    setTimezone(profile.timezone ?? browserTimezone());
+    setTimezone(profile.timezone || browserTimezone());
     setAvatarPath(profile.avatarPath);
     setAvatarUrl(profile.avatarUrl);
   }, [profile]);
@@ -246,7 +246,7 @@ function ProfilePage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="timezone">Timezone</Label>
-                  <Select value={timezone} onValueChange={setTimezone}>
+                  <Select value={timezone} onValueChange={(v) => v && setTimezone(v)}>
                     <SelectTrigger id="timezone" aria-label="Timezone">
                       <SelectValue placeholder="Choose a timezone" />
                     </SelectTrigger>

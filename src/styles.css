@@ -59,12 +59,23 @@
 
   --color-gold: var(--gold);
   --color-gold-foreground: var(--gold-foreground);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-foreground: var(--ink-foreground);
+  --color-ink-muted: var(--ink-muted);
 }
 
 :root {
   --radius: 0.5rem;
   --shadow-panel: 0 2px 8px -4px color-mix(in oklab, var(--foreground) 14%, transparent);
+  --shadow-elevated: 0 1px 0 0 color-mix(in oklab, var(--ink-foreground) 8%, transparent) inset, 0 40px 80px -40px color-mix(in oklab, var(--ink) 70%, transparent);
   --photo-scrim: linear-gradient(90deg, color-mix(in oklab, var(--background) 94%, transparent), color-mix(in oklab, var(--background) 70%, transparent) 65%, transparent);
+
+  /* Brand ink — identical in light and dark so hero bands stay on-brand. */
+  --ink: oklch(0.2 0.056 285.5);
+  --ink-soft: oklch(0.3 0.07 285.5);
+  --ink-foreground: oklch(0.97 0.006 85);
+  --ink-muted: oklch(0.76 0.02 285.5);
 
   --font-body: "Manrope", system-ui, sans-serif;
   --font-display: "Sora", system-ui, sans-serif;
@@ -194,6 +205,35 @@
   background: var(--primary);
   color: var(--primary-foreground);
   border-color: var(--primary);
+}
+
+/* Deep ink stage with a soft gold glow — used for hero and CTA bands. */
+@utility ink-stage {
+  background:
+    radial-gradient(60% 80% at 85% 0%, color-mix(in oklab, var(--gold) 26%, transparent), transparent 70%),
+    radial-gradient(50% 60% at 0% 100%, color-mix(in oklab, var(--ink-soft) 90%, transparent), transparent 70%),
+    var(--ink);
+  color: var(--ink-foreground);
+}
+
+/* Faint grid texture for ink surfaces. */
+@utility ink-grid {
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--ink-foreground) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--ink-foreground) 6%, transparent) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(70% 70% at 50% 30%, black, transparent);
+}
+
+@utility gold-text {
+  background: linear-gradient(100deg, var(--gold), color-mix(in oklab, var(--gold) 55%, var(--ink-foreground)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility elevated {
+  box-shadow: var(--shadow-elevated);
 }
 
 @media (prefers-reduced-motion: reduce) {

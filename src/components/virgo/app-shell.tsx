@@ -106,7 +106,7 @@ function Nav({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-function UserFooter({ onNavigate }: { onNavigate?: () => void }) {
+function UserFooter({ onNavigate }: { onNavigate?: (() => void) | undefined }) {
   const navigate = useNavigate();
   const { profile } = useProfile();
 

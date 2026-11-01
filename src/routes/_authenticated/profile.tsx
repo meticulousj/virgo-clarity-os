@@ -50,7 +50,11 @@ function ProfilePage() {
   const [saving, setSaving] = React.useState(false);
   const [status, setStatus] = React.useState<{ kind: "ok" | "error"; text: string } | null>(null);
   const fileRef = React.useRef<HTMLInputElement>(null);
-  const timezones = React.useMemo(() => listTimezones(), []);
+  const baseTimezones = React.useMemo(() => listTimezones(), []);
+  const timezones = React.useMemo(
+    () => (timezone && !baseTimezones.includes(timezone) ? [timezone, ...baseTimezones] : baseTimezones),
+    [timezone, baseTimezones],
+  );
   const [now, setNow] = React.useState<Date | null>(null);
 
   React.useEffect(() => {

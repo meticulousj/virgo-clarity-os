@@ -21,6 +21,7 @@ import { Route as AuthenticatedHabitsRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedInsightsRouteImport } from './routes/_authenticated/insights'
 import { Route as AuthenticatedJournalRouteImport } from './routes/_authenticated/journal'
 import { Route as AuthenticatedPlannerRouteImport } from './routes/_authenticated/planner'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedReviewRouteImport } from './routes/_authenticated/review'
 import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/tasks'
 
@@ -83,6 +84,11 @@ const AuthenticatedPlannerRoute = AuthenticatedPlannerRouteImport.update({
   path: '/planner',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedReviewRoute = AuthenticatedReviewRouteImport.update({
   id: '/review',
   path: '/review',
@@ -106,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/insights': typeof AuthenticatedInsightsRoute
   '/journal': typeof AuthenticatedJournalRoute
   '/planner': typeof AuthenticatedPlannerRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/review': typeof AuthenticatedReviewRoute
   '/tasks': typeof AuthenticatedTasksRoute
 }
@@ -121,6 +128,7 @@ export interface FileRoutesByTo {
   '/insights': typeof AuthenticatedInsightsRoute
   '/journal': typeof AuthenticatedJournalRoute
   '/planner': typeof AuthenticatedPlannerRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/review': typeof AuthenticatedReviewRoute
   '/tasks': typeof AuthenticatedTasksRoute
 }
@@ -138,6 +146,7 @@ export interface FileRoutesById {
   '/_authenticated/insights': typeof AuthenticatedInsightsRoute
   '/_authenticated/journal': typeof AuthenticatedJournalRoute
   '/_authenticated/planner': typeof AuthenticatedPlannerRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/review': typeof AuthenticatedReviewRoute
   '/_authenticated/tasks': typeof AuthenticatedTasksRoute
 }
@@ -155,6 +164,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/journal'
     | '/planner'
+    | '/profile'
     | '/review'
     | '/tasks'
   fileRoutesByTo: FileRoutesByTo
@@ -170,6 +180,7 @@ export interface FileRouteTypes {
     | '/insights'
     | '/journal'
     | '/planner'
+    | '/profile'
     | '/review'
     | '/tasks'
   id:
@@ -186,6 +197,7 @@ export interface FileRouteTypes {
     | '/_authenticated/insights'
     | '/_authenticated/journal'
     | '/_authenticated/planner'
+    | '/_authenticated/profile'
     | '/_authenticated/review'
     | '/_authenticated/tasks'
   fileRoutesById: FileRoutesById
@@ -282,6 +294,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPlannerRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/review': {
       id: '/_authenticated/review'
       path: '/review'
@@ -309,6 +328,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedInsightsRoute: typeof AuthenticatedInsightsRoute
   AuthenticatedJournalRoute: typeof AuthenticatedJournalRoute
   AuthenticatedPlannerRoute: typeof AuthenticatedPlannerRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedReviewRoute: typeof AuthenticatedReviewRoute
   AuthenticatedTasksRoute: typeof AuthenticatedTasksRoute
 }
@@ -323,6 +343,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedInsightsRoute: AuthenticatedInsightsRoute,
   AuthenticatedJournalRoute: AuthenticatedJournalRoute,
   AuthenticatedPlannerRoute: AuthenticatedPlannerRoute,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedReviewRoute: AuthenticatedReviewRoute,
   AuthenticatedTasksRoute: AuthenticatedTasksRoute,
 }

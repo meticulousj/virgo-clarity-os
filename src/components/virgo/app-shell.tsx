@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
-import type { User } from "@supabase/supabase-js";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { initialsFor, useProfile } from "@/lib/profile";
 const WORDMARK_URL = "/virgo-wordmark.png";
 import {
   LayoutDashboard,
@@ -100,57 +101,43 @@ function Nav({ onNavigate }: { onNavigate?: () => void }) {
           </div>
         ))}
       </nav>
-      <UserFooter />
+      <UserFooter onNavigate={onNavigate} />
     </div>
   );
 }
 
-function UserFooter() {
+function UserFooter({ onNavigate }: { onNavigate?: () => void }) {
   const navigate = useNavigate();
-  const [user, setUser] = React.useState<User | null>(null);
-  const [displayName, setDisplayName] = React.useState<string>("");
-
-  React.useEffect(() => {
-    let cancelled = false;
-    supabase.auth.getUser().then(async ({ data }) => {
-      if (cancelled || !data.user) return;
-      setUser(data.user);
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("display_name")
-        .eq("id", data.user.id)
-        .maybeSingle();
-      if (!cancelled && profile?.display_name) setDisplayName(profile.display_name);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const { profile } = useProfile();
 
   async function handleSignOut() {
     await supabase.auth.signOut();
     navigate({ to: "/auth", replace: true });
   }
 
-  const name = displayName || user?.email?.split("@")[0] || "Account";
-  const initials = name
-    .split(/[\s._-]+/)
-    .map((p) => p[0])
-    .filter(Boolean)
-    .slice(0, 2)
-    .join("")
-    .toUpperCase();
+  const name = profile?.displayName || profile?.email?.split("@")[0] || "Account";
+  const initials = initialsFor(name);
 
   return (
     <div className="border-t border-sidebar-border p-4">
-      <div className="flex items-center gap-3">
-        <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-gold/25 bg-gold/10 font-heading text-xs font-semibold text-gold">
-          {initials || "·"}
-        </div>
-        <div className="flex-1 overflow-hidden">
-          <p className="truncate text-sm font-medium">{name}</p>
-          <p className="truncate text-xs text-sidebar-foreground/60">{user?.email ?? "Personal workspace"}</p>
-        </div>
+      <div className="flex items-center gap-2">
+        <Link
+          to="/profile"
+          onClick={onNavigate}
+          className="flex min-w-0 flex-1 items-center gap-3 rounded-md p-1 transition-colors hover:bg-sidebar-accent"
+          title="Edit profile"
+        >
+          <Avatar className="h-9 w-9 shrink-0 border border-gold/25">
+            {profile?.avatarUrl ? <AvatarImage src={profile.avatarUrl} alt={name} className="object-cover" /> : null}
+            <AvatarFallback className="bg-gold/10 font-heading text-xs font-semibold text-gold">
+              {initials || "·"}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex-1 overflow-hidden">
+            <p className="truncate text-sm font-medium">{name}</p>
+            <p className="truncate text-xs text-sidebar-foreground/60">{profile?.email ?? "Personal workspace"}</p>
+          </div>
+        </Link>
         <Button variant="ghost" size="icon" aria-label="Sign out" title="Sign out" onClick={handleSignOut}>
           <LogOut className="h-4 w-4" />
         </Button>

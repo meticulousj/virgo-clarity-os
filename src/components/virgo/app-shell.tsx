@@ -212,7 +212,7 @@ export function AppShell({
         <div className="mx-auto max-w-[1480px] p-4 sm:p-6 lg:p-8 xl:p-10">
           <div className="virgo-rise mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-border/70 pb-6">
             <div className="min-w-0">
-              <p className="eyebrow mb-2 flex items-center gap-2">
+              <p className="eyebrow mb-2 flex items-center gap-2 text-muted-foreground">
                 <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden />
                 {section}
               </p>

@@ -73,7 +73,7 @@ function Index() {
     }));
 
   const stats = [
-    { label: "Open tasks", value: String(open.length), detail: "3 high priority", icon: Check },
+    { label: "Open tasks", value: String(open.length), detail: `${open.filter((t) => priorityScore(t) >= 50).length} high priority`, icon: Check },
     { label: "Daily rhythm", value: `${habitDone}/${state.habits.length}`, detail: "habits complete", icon: TrendingUp },
     { label: "Sleep", value: `${avg(recent.map((h) => h.sleep)).toFixed(1)}h`, detail: "7 day average", icon: Moon },
     { label: "Monthly spend", value: `$${monthSpend(state.txns).toFixed(0)}`, detail: "across all categories", icon: CalendarDays },
@@ -94,32 +94,57 @@ function Index() {
     >
       <div className="virgo-rise grid gap-6 xl:grid-cols-[minmax(0,1.65fr)_minmax(300px,0.85fr)]">
         <div className="space-y-6">
-          <section className="relative border-l-2 border-gold py-3 pl-5 sm:py-5 sm:pl-6">
-            <div className="relative max-w-2xl">
-              <div className="mb-4 text-[10px] font-semibold uppercase text-muted-foreground">Daily brief</div>
-              <h2 className="font-heading text-2xl font-medium leading-tight sm:text-3xl">Protect the first half of your day for the roadmap.</h2>
-              <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground">You have {open.length} open tasks and {events.length} fixed events. Your clearest path is one meaningful block before reactive work begins.</p>
-              <Button asChild variant="link" className="mt-3 px-0"><Link to="/planner">Build today’s plan<ArrowRight /></Link></Button>
+          <section className="ink-stage elevated relative isolate overflow-hidden rounded-xl p-6 sm:p-8">
+            <div className="ink-grid pointer-events-none absolute inset-0 -z-10" aria-hidden />
+            <div className="max-w-2xl">
+              <p className="eyebrow flex items-center gap-2 text-gold">
+                <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden />
+                Daily brief
+              </p>
+              <h2 className="mt-4 font-heading text-2xl font-semibold leading-tight sm:text-[2rem]">
+                Protect the first half of your day for{" "}
+                <span className="gold-text">what matters most.</span>
+              </h2>
+              <p className="mt-3 max-w-xl text-sm leading-7 text-ink-muted">
+                You have {open.length} open tasks and {events.length} fixed events. Your clearest
+                path is one meaningful block before reactive work begins.
+              </p>
+              <Button asChild size="sm" className="mt-5 bg-gold text-gold-foreground hover:bg-gold/90">
+                <Link to="/planner">
+                  Build today’s plan <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+            <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
+              {stats.map((s) => {
+                const Icon = s.icon;
+                return (
+                  <div
+                    key={s.label}
+                    className="rounded-lg border border-ink-foreground/10 bg-ink-foreground/5 p-4 backdrop-blur-sm"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[11px] font-medium text-ink-muted">{s.label}</span>
+                      <Icon className="h-3.5 w-3.5 shrink-0 text-gold" />
+                    </div>
+                    <p className="mt-3 font-heading text-2xl font-semibold tabular-nums">{s.value}</p>
+                    <p className="mt-1 text-[11px] leading-4 text-ink-muted">{s.detail}</p>
+                  </div>
+                );
+              })}
             </div>
           </section>
-
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            {stats.map((s) => {
-              const Icon = s.icon;
-              return <Card key={s.label} className="group"><CardContent className="p-4"><div className="mb-4 flex items-center justify-between gap-2"><span className="text-[11px] font-medium text-muted-foreground">{s.label}</span><Icon className="h-4 w-4 shrink-0 text-muted-foreground"/></div><p className="font-heading text-2xl font-semibold tabular-nums">{s.value}</p><p className="mt-2 text-[10px] leading-4 text-muted-foreground">{s.detail}</p></CardContent></Card>
-            })}
-          </div>
 
           <Card>
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center justify-between font-heading text-lg"><span>Top priorities</span><Link to="/tasks" className="font-sans text-xs font-semibold text-muted-foreground hover:text-foreground">View all</Link></CardTitle>
           </CardHeader>
           <CardContent>
-            <ul className="space-y-2">
+            <ul>
               {open.slice(0, 5).map((task) => {
                 const score = priorityScore(task);
                 return (
-                  <li key={task.id} className="group grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 border-b py-3.5 last:border-0">
+                  <li key={task.id} className="group grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 border-b py-3 last:border-0">
                     <Checkbox
                       id={`home-${task.id}`}
                       checked={task.done}
@@ -130,7 +155,14 @@ function Index() {
                       <span className="block break-words">{task.title}</span>
                       <span className="mt-0.5 block text-[11px] font-medium text-muted-foreground">{task.project}</span>
                     </label>
-                    <Badge className={cn("tabular-nums", priorityBand(score).tone)}>{score}</Badge>
+                    <span className="flex items-center gap-2">
+                      <Badge variant="secondary" className={cn("hidden sm:inline-flex", priorityBand(score).tone)}>
+                        {priorityBand(score).label}
+                      </Badge>
+                      <span className="grid h-9 w-9 place-items-center rounded-md bg-secondary font-heading text-sm font-semibold tabular-nums">
+                        {score}
+                      </span>
+                    </span>
                   </li>
                 );
               })}

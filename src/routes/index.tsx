@@ -99,7 +99,7 @@ function Landing() {
             <span className="h-1.5 w-1.5 rounded-full bg-gold" />
             The personal operating system
           </p>
-          <h1 className="virgo-rise mx-auto mt-7 max-w-4xl font-heading text-5xl font-semibold leading-[1.05] sm:text-7xl">
+          <h1 className="virgo-rise mx-auto mt-7 max-w-4xl font-heading text-[2.5rem] font-semibold leading-[1.05] sm:text-7xl">
             A clear mind.
             <br />
             <span className="gold-text">A focused day.</span>
@@ -248,8 +248,10 @@ function Landing() {
             ["02", "Plan", "Your AI planner builds a realistic, time-blocked day around your energy."],
             ["03", "Reflect", "Journal, log your health, and close the week with a guided review."],
           ].map(([n, t, b]) => (
-            <div key={n}>
-              <p className="font-heading text-sm font-semibold text-gold">{n}</p>
+            <div key={n} className="border-t-2 border-gold/60 pt-6">
+              <p className="grid h-9 w-9 place-items-center rounded-full bg-ink font-heading text-xs font-semibold text-gold">
+                {n}
+              </p>
               <h3 className="mt-3 font-heading text-2xl font-semibold">{t}</h3>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">{b}</p>
             </div>

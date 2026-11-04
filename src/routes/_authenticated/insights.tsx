@@ -112,12 +112,14 @@ function InsightsPage() {
           <CardContent>
             <div className="flex h-40 items-end gap-2">
               {recent.map((h) => (
-                <div key={h.date} className="flex flex-1 flex-col items-center gap-1">
-                  <div
-                    className="w-full rounded-t bg-primary"
-                    style={{ height: `${(h.focusMinutes / maxFocus) * 100}%` }}
-                    title={`${h.focusMinutes} focus minutes`}
-                  />
+                <div key={h.date} className="flex h-full flex-1 flex-col items-center gap-1">
+                  <div className="flex w-full flex-1 items-end">
+                    <div
+                      className="w-full rounded-t bg-primary transition-colors hover:bg-gold"
+                      style={{ height: `${(h.focusMinutes / maxFocus) * 100}%` }}
+                      title={`${h.focusMinutes} focus minutes`}
+                    />
+                  </div>
                   <span className="text-[10px] tabular-nums text-muted-foreground">
                     {h.sleep.toFixed(1)}
                   </span>

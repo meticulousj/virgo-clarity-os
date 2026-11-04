@@ -9,7 +9,22 @@ import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { initialsFor, useProfile } from "@/lib/profile";
-const WORDMARK_URL = "/virgo-wordmark.png";
+const MARK_URL = "/icon-192.png";
+
+function BrandMark({ size = "md" }: { size?: "sm" | "md" }) {
+  return (
+    <span className="flex items-center gap-2.5">
+      <img
+        src={MARK_URL}
+        alt=""
+        className={cn("rounded-md ring-1 ring-gold/30", size === "sm" ? "h-7 w-7" : "h-8 w-8")}
+      />
+      <span className={cn("font-heading font-semibold text-sidebar-foreground", size === "sm" ? "text-base" : "text-lg")}>
+        Virgo <span className="text-gold">OS</span>
+      </span>
+    </span>
+  );
+}
 import {
   LayoutDashboard,
   Sparkles,
@@ -73,7 +88,7 @@ function Nav({ onNavigate }: { onNavigate?: () => void }) {
     <div className="sidebar-stage flex h-full flex-col">
       <div className="flex h-20 items-center px-6">
         <Link to="/dashboard" onClick={onNavigate} aria-label="Virgo OS home">
-          <img src={WORDMARK_URL} alt="Virgo OS" className="h-8 w-auto brightness-0 invert" />
+          <BrandMark />
         </Link>
       </div>
       <div className="mx-6 h-px bg-gradient-to-r from-gold/40 via-sidebar-border to-transparent" />
@@ -205,7 +220,9 @@ export function AppShell({
             <Nav onNavigate={() => setOpen(false)} />
           </SheetContent>
         </Sheet>
-         <img src={WORDMARK_URL} alt="Virgo OS" className="ml-3 h-7 w-auto brightness-0 invert" />
+         <span className="ml-3" aria-label="Virgo OS">
+          <BrandMark size="sm" />
+        </span>
       </div>
 
       <main className="pt-16 lg:pl-64 lg:pt-0">

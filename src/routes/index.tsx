@@ -16,7 +16,7 @@ import {
   MailCheck,
 } from "lucide-react";
 
-const WORDMARK_URL = "/virgo-wordmark.png";
+import { BrandMark } from "@/components/virgo/brand-mark";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -78,7 +78,9 @@ function Landing() {
       <section className="ink-stage relative isolate overflow-hidden">
         <div className="ink-grid pointer-events-none absolute inset-0 -z-10" />
         <header className="mx-auto flex h-20 max-w-6xl items-center justify-between px-5 sm:px-8">
-          <img src={WORDMARK_URL} alt="Virgo OS" className="h-8 w-auto brightness-0 invert" />
+          <Link to="/" aria-label="Virgo OS home">
+            <BrandMark />
+          </Link>
           <nav className="flex items-center gap-2">
             <Link
               to="/auth"
@@ -273,10 +275,10 @@ function Landing() {
         </div>
       </section>
 
-      <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-8 text-xs text-muted-foreground sm:px-8">
-          <img src={WORDMARK_URL} alt="Virgo OS" className="h-6 w-auto dark:brightness-0 dark:invert" />
-          <span>© {new Date().getFullYear()} Virgo OS · Clarity & execution.</span>
+      <footer className="ink-stage">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-10 text-xs text-ink-muted sm:px-8">
+          <BrandMark size="sm" />
+          <span>© 2026 Virgo OS · Clarity & execution.</span>
         </div>
       </footer>
     </div>

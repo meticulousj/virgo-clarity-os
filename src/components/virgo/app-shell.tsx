@@ -9,22 +9,7 @@ import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { initialsFor, useProfile } from "@/lib/profile";
-const MARK_URL = "/icon-192.png";
-
-function BrandMark({ size = "md" }: { size?: "sm" | "md" }) {
-  return (
-    <span className="flex items-center gap-2.5">
-      <img
-        src={MARK_URL}
-        alt=""
-        className={cn("rounded-md ring-1 ring-gold/30", size === "sm" ? "h-7 w-7" : "h-8 w-8")}
-      />
-      <span className={cn("font-heading font-semibold text-sidebar-foreground", size === "sm" ? "text-base" : "text-lg")}>
-        Virgo <span className="text-gold">OS</span>
-      </span>
-    </span>
-  );
-}
+import { BrandMark } from "@/components/virgo/brand-mark";
 import {
   LayoutDashboard,
   Sparkles,

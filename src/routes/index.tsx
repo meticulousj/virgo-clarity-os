@@ -16,7 +16,7 @@ import {
   MailCheck,
 } from "lucide-react";
 
-const WORDMARK_URL = "/virgo-wordmark.png";
+import { BrandMark } from "@/components/virgo/brand-mark";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -78,7 +78,9 @@ function Landing() {
       <section className="ink-stage relative isolate overflow-hidden">
         <div className="ink-grid pointer-events-none absolute inset-0 -z-10" />
         <header className="mx-auto flex h-20 max-w-6xl items-center justify-between px-5 sm:px-8">
-          <img src={WORDMARK_URL} alt="Virgo OS" className="h-8 w-auto brightness-0 invert" />
+          <Link to="/" aria-label="Virgo OS home">
+            <BrandMark />
+          </Link>
           <nav className="flex items-center gap-2">
             <Link
               to="/auth"
@@ -97,7 +99,7 @@ function Landing() {
             <span className="h-1.5 w-1.5 rounded-full bg-gold" />
             The personal operating system
           </p>
-          <h1 className="virgo-rise mx-auto mt-7 max-w-4xl font-heading text-5xl font-semibold leading-[1.05] sm:text-7xl">
+          <h1 className="virgo-rise mx-auto mt-7 max-w-4xl font-heading text-[2.5rem] font-semibold leading-[1.05] sm:text-7xl">
             A clear mind.
             <br />
             <span className="gold-text">A focused day.</span>
@@ -246,8 +248,10 @@ function Landing() {
             ["02", "Plan", "Your AI planner builds a realistic, time-blocked day around your energy."],
             ["03", "Reflect", "Journal, log your health, and close the week with a guided review."],
           ].map(([n, t, b]) => (
-            <div key={n}>
-              <p className="font-heading text-sm font-semibold text-gold">{n}</p>
+            <div key={n} className="border-t-2 border-gold/60 pt-6">
+              <p className="grid h-9 w-9 place-items-center rounded-full bg-ink font-heading text-xs font-semibold text-gold">
+                {n}
+              </p>
               <h3 className="mt-3 font-heading text-2xl font-semibold">{t}</h3>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">{b}</p>
             </div>
@@ -273,10 +277,10 @@ function Landing() {
         </div>
       </section>
 
-      <footer className="border-t border-border">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-8 text-xs text-muted-foreground sm:px-8">
-          <img src={WORDMARK_URL} alt="Virgo OS" className="h-6 w-auto dark:brightness-0 dark:invert" />
-          <span>© {new Date().getFullYear()} Virgo OS · Clarity & execution.</span>
+      <footer className="ink-stage">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-10 text-xs text-ink-muted sm:px-8">
+          <BrandMark size="sm" />
+          <span>© 2026 Virgo OS · Clarity & execution.</span>
         </div>
       </footer>
     </div>

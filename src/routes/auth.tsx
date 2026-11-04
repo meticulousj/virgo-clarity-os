@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, Check, Lock, MailCheck } from "lucide-react";
 
-const WORDMARK_URL = "/virgo-wordmark.png";
+import { BrandMark } from "@/components/virgo/brand-mark";
 
 function sanitizeRedirect(value: unknown): string {
   if (typeof value !== "string") return "/dashboard";
@@ -62,11 +62,11 @@ function AuthPage() {
   }
 
   return (
-    <div className="grid min-h-screen bg-background lg:grid-cols-[1.05fr_1fr]">
+    <div className="grid min-h-screen content-start bg-background lg:content-stretch lg:grid-cols-[1.05fr_1fr]">
       <aside className="ink-stage relative isolate hidden flex-col justify-between overflow-hidden p-12 lg:flex">
         <div className="ink-grid pointer-events-none absolute inset-0 -z-10" />
-        <Link to="/">
-          <img src={WORDMARK_URL} alt="Virgo OS" className="h-8 w-auto brightness-0 invert" />
+        <Link to="/" aria-label="Virgo OS home" className="w-fit">
+          <BrandMark />
         </Link>
         <div className="max-w-md">
           <p className="text-xs font-semibold uppercase text-gold">Your daily brief</p>
@@ -87,15 +87,38 @@ function AuthPage() {
               </li>
             ))}
           </ul>
+          <div className="elevated mt-12 rounded-xl border border-ink-foreground/10 bg-ink-foreground/5 p-5 backdrop-blur-sm">
+            <p className="eyebrow text-gold">Today’s top priority</p>
+            <div className="mt-3 flex items-center gap-4">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-md bg-gold font-heading text-sm font-semibold tabular-nums text-gold-foreground">
+                92
+              </span>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold">Finalize Q4 strategy deck</p>
+                <p className="mt-0.5 text-xs text-ink-muted">08:00–10:00 · Deep work block</p>
+              </div>
+            </div>
+          </div>
         </div>
         <p className="text-xs text-ink-muted">Private by default · Passwordless sign-in</p>
       </aside>
 
-      <main className="flex items-center justify-center px-5 py-12 sm:px-10">
+      <header className="ink-stage relative isolate overflow-hidden px-5 pb-10 pt-6 lg:hidden">
+        <div className="ink-grid pointer-events-none absolute inset-0 -z-10" />
+        <Link to="/" aria-label="Virgo OS home" className="inline-block">
+          <BrandMark size="sm" />
+        </Link>
+        <p className="mt-8 font-heading text-2xl font-semibold leading-tight">
+          Fewer decisions. <span className="gold-text">Better days.</span>
+        </p>
+      </header>
+
+      <main className="flex items-start justify-center px-5 py-10 sm:px-10 lg:items-center lg:py-12">
         <div className="virgo-rise w-full max-w-sm">
-          <Link to="/" className="mb-10 inline-block lg:hidden">
-            <img src={WORDMARK_URL} alt="Virgo OS" className="h-9 w-auto dark:brightness-0 dark:invert" />
-          </Link>
+          <p className="eyebrow mb-3 flex items-center gap-2 text-gold">
+            <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden />
+            Sign in
+          </p>
 
           {status === "sent" ? (
             <div className="flex flex-col items-start gap-4">
@@ -134,7 +157,7 @@ function AuthPage() {
                   />
                 </div>
                 {status === "error" ? <p className="text-sm text-destructive">{errorMsg}</p> : null}
-                <Button type="submit" className="h-11 w-full" disabled={status === "sending"}>
+                <Button type="submit" className="h-11 w-full bg-gold text-gold-foreground hover:bg-gold/90" disabled={status === "sending"}>
                   {status === "sending" ? "Sending link…" : "Email me a sign-in link"}
                   {status === "sending" ? null : <ArrowRight className="ml-1 h-4 w-4" />}
                 </Button>

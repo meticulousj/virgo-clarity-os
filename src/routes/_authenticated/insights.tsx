@@ -91,7 +91,7 @@ function InsightsPage() {
         </div>
       ) : null}
 
-      <div className="mb-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="mb-4 grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         {stats.map((s) => (
           <Card key={s.label}>
             <CardContent className="pt-6">
@@ -104,15 +104,15 @@ function InsightsPage() {
 
       <HealthLogger logs={state.health} />
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="font-heading text-lg">Sleep vs focus</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex h-40 items-end gap-2">
+            <div className="flex h-40 items-end gap-1 sm:gap-2">
               {recent.map((h) => (
-                <div key={h.date} className="flex h-full flex-1 flex-col items-center gap-1">
+                <div key={h.date} className="flex h-full min-w-0 flex-1 flex-col items-center gap-1">
                   <div className="flex w-full flex-1 items-end">
                     <div
                       className="w-full rounded-t bg-primary transition-colors hover:bg-gold"
@@ -120,7 +120,7 @@ function InsightsPage() {
                       title={`${h.focusMinutes} focus minutes`}
                     />
                   </div>
-                  <span className="text-[10px] tabular-nums text-muted-foreground">
+                  <span className="text-[9px] tabular-nums text-muted-foreground sm:text-[10px]">
                     {h.sleep.toFixed(1)}
                   </span>
                 </div>

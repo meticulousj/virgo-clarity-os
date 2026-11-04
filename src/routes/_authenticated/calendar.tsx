@@ -56,8 +56,8 @@ function CalendarPage() {
 
   return (
     <AppShell title="Calendar" subtitle="The next seven days, at a glance.">
-      <div className="grid gap-4 lg:grid-cols-3">
-        <div className="space-y-3 lg:col-span-2">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-3">
+        <div className="min-w-0 space-y-3 lg:col-span-2">
           {week.map((d) => {
             const events = state.events
               .filter((e) => e.date === d)
@@ -84,11 +84,11 @@ function CalendarPage() {
                           key={e.id}
                           className="flex items-center gap-3 rounded-lg border p-2 text-sm"
                         >
-                          <span className="w-24 shrink-0 tabular-nums text-muted-foreground">
+                          <span className="shrink-0 text-xs tabular-nums text-muted-foreground sm:w-24 sm:text-sm">
                             {e.start}–{e.end}
                           </span>
                           <span className="min-w-0 flex-1 truncate font-medium">{e.title}</span>
-                          <Badge variant="secondary" className="capitalize">
+                          <Badge variant="secondary" className="hidden capitalize sm:inline-flex">
                             {e.kind}
                           </Badge>
                           <Button

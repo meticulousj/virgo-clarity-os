@@ -62,7 +62,7 @@ function AuthPage() {
   }
 
   return (
-    <div className="grid min-h-screen bg-background lg:grid-cols-[1.05fr_1fr]">
+    <div className="grid min-h-screen content-start bg-background lg:content-stretch lg:grid-cols-[1.05fr_1fr]">
       <aside className="ink-stage relative isolate hidden flex-col justify-between overflow-hidden p-12 lg:flex">
         <div className="ink-grid pointer-events-none absolute inset-0 -z-10" />
         <Link to="/" aria-label="Virgo OS home" className="w-fit">

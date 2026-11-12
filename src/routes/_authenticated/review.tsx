@@ -72,6 +72,12 @@ function ReviewPage() {
       ) : null}
 
       <div className="space-y-4">
+        {state.reviews.length === 0 ? (
+          <div className="border-l-2 border-gold py-4 pl-5">
+            <p className="font-heading text-lg font-semibold">A fresh perspective</p>
+            <p className="mt-2 text-sm text-muted-foreground">No weekly reviews yet.</p>
+          </div>
+        ) : null}
         {state.reviews.map((r) => (
           <Card key={r.id}>
             <CardHeader className="pb-2">

@@ -75,37 +75,37 @@ function HabitsPage() {
             const pct = Math.min(100, (done / habit.target) * 100);
             return (
               <div key={habit.id} className="rounded-lg border p-3">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div>
+                <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 sm:flex sm:justify-between">
+                  <div className="min-w-0">
                     <p className="text-sm font-medium">{habit.name}</p>
                     <p className="text-xs text-muted-foreground">
                       {done}/{habit.target} this week
                     </p>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="col-span-2 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 sm:flex">
                     <Badge variant="secondary" className="gap-1">
                       <Flame className="h-3 w-3" />
                       {habitStreak(habit)}d
                     </Badge>
-                    <div className="flex gap-1">
+                    <div className="grid grid-cols-7 gap-1">
                       {week.map((date, i) => {
                         const active = habit.log.includes(date);
                         return (
-                          <button
+                          <Button
                             key={date}
                             type="button"
                             onClick={() => toggle(habit.id, date)}
                             aria-label={`${habit.name} on ${date}`}
                             aria-pressed={active}
                             className={cn(
-                              "h-7 w-7 rounded-md border text-[11px] font-medium transition-colors",
+                              "h-7 min-w-0 rounded-md border p-0 text-[11px] font-medium transition-colors sm:w-7",
                               active
-                                ? "border-primary bg-primary text-primary-foreground"
+                                ? "border-gold bg-gold text-gold-foreground"
                                 : "bg-background text-muted-foreground hover:bg-accent",
                             )}
                           >
                             {DAY_LABELS[new Date(date).getDay()]}
-                          </button>
+                          </Button>
                         );
                       })}
                     </div>

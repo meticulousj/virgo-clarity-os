@@ -198,6 +198,18 @@
   box-shadow: var(--shadow-panel);
 }
 
+@utility module-heading {
+  background: var(--ink);
+  color: var(--ink-foreground);
+  border-bottom: 1px solid color-mix(in oklab, var(--gold) 35%, var(--ink));
+}
+
+@utility module-content {
+  & [data-slot="input"], & textarea {
+    min-width: 0;
+  }
+}
+
 @utility photo-scrim {
   background: var(--photo-scrim);
 }
@@ -247,7 +259,7 @@
   font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
 }
 
 @utility elevated {

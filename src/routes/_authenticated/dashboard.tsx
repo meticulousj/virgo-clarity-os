@@ -94,18 +94,17 @@ function Index() {
     >
       <div className="virgo-rise grid gap-6 xl:grid-cols-[minmax(0,1.65fr)_minmax(300px,0.85fr)]">
         <div className="space-y-6">
-          <section className="ink-stage elevated relative isolate overflow-hidden rounded-xl p-6 sm:p-8">
-            <div className="ink-grid pointer-events-none absolute inset-0 -z-10" aria-hidden />
+          <section className="border-b border-gold/35 py-2 sm:py-4">
             <div className="max-w-2xl">
-              <p className="eyebrow flex items-center gap-2 text-gold">
+              <p className="eyebrow flex items-center gap-2 text-muted-foreground">
                 <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden />
                 Daily brief
               </p>
               <h2 className="mt-4 font-heading text-2xl font-semibold leading-tight sm:text-[2rem]">
                 Protect the first half of your day for{" "}
-                <span className="gold-text">what matters most.</span>
+                <span>what matters most.</span>
               </h2>
-              <p className="mt-3 max-w-xl text-sm leading-7 text-ink-muted">
+              <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground">
                 You have {open.length} open tasks and {events.length} fixed events. Your clearest
                 path is one meaningful block before reactive work begins.
               </p>
@@ -121,14 +120,14 @@ function Index() {
                 return (
                   <div
                     key={s.label}
-                    className="rounded-lg border border-ink-foreground/10 bg-ink-foreground/5 p-4 backdrop-blur-sm"
+                    className="min-w-0 border-t border-gold/50 py-4"
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-[11px] font-medium text-ink-muted">{s.label}</span>
+                      <span className="text-[11px] font-medium text-muted-foreground">{s.label}</span>
                       <Icon className="h-3.5 w-3.5 shrink-0 text-gold" />
                     </div>
                     <p className="mt-3 font-heading text-2xl font-semibold tabular-nums">{s.value}</p>
-                    <p className="mt-1 text-[11px] leading-4 text-ink-muted">{s.detail}</p>
+                    <p className="mt-1 text-[11px] leading-4 text-muted-foreground">{s.detail}</p>
                   </div>
                 );
               })}

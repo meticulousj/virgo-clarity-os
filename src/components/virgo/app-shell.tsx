@@ -211,22 +211,24 @@ export function AppShell({
       </div>
 
       <main className="pt-16 lg:pl-64 lg:pt-0">
-        <div className="mx-auto max-w-[1480px] p-4 sm:p-6 lg:p-8 xl:p-10">
-          <div className="virgo-rise mb-8 flex flex-wrap items-end justify-between gap-4 border-b border-border/70 pb-6">
+        <header className="module-heading">
+          <div className="virgo-rise mx-auto grid max-w-[1480px] grid-cols-[minmax(0,1fr)] items-end gap-4 px-4 py-6 sm:px-6 sm:py-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:px-8 xl:px-10">
             <div className="min-w-0">
-              <p className="eyebrow mb-2 flex items-center gap-2 text-muted-foreground">
+              <p className="eyebrow mb-2 flex items-center gap-2 text-gold">
                 <span className="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden />
                 {section}
               </p>
               <h1 className="break-words font-heading text-2xl font-semibold leading-tight sm:text-3xl">
                 {title}
               </h1>
-              {subtitle ? <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p> : null}
+              {subtitle ? <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-muted">{subtitle}</p> : null}
             </div>
-            <div className="flex shrink-0 items-center gap-2">
+            <div className="flex min-w-0 shrink-0 items-center gap-2">
               {actions}
             </div>
           </div>
+        </header>
+        <div className="module-content mx-auto max-w-[1480px] p-4 sm:p-6 lg:p-8 xl:p-10">
           {children}
         </div>
       </main>

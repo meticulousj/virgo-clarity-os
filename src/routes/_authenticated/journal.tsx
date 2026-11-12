@@ -62,21 +62,22 @@ function JournalPage() {
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">Mood</span>
                 {[1, 2, 3, 4, 5].map((m) => (
-                  <button
+                  <Button
+                    variant="outline"
                     key={m}
                     type="button"
                     onClick={() => setMood(m)}
                     aria-label={`Mood ${m}`}
                     aria-pressed={mood === m}
                     className={cn(
-                      "h-8 w-8 rounded-md border text-sm font-medium transition-colors",
+                      "h-8 w-8 shrink-0 rounded-md border p-0 text-sm font-medium transition-colors",
                       mood === m
-                        ? "border-primary bg-primary text-primary-foreground"
+                        ? "border-gold bg-gold text-gold-foreground hover:bg-gold/90"
                         : "hover:bg-accent",
                     )}
                   >
                     {m}
-                  </button>
+                  </Button>
                 ))}
               </div>
               <Button type="submit">Save entry</Button>

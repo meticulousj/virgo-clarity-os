@@ -245,15 +245,17 @@ function HealthLogger({ logs }: { logs: HealthLog[] }) {
 
         <ul className="mt-4 divide-y rounded-lg border">
           {rows.map((h) => (
-            <li key={h.date} className="flex items-center gap-3 p-2 text-sm">
-              <span className="w-24 tabular-nums text-muted-foreground">{h.date}</span>
+            <li key={h.date} className="flex flex-wrap items-center gap-x-3 gap-y-1 p-2 text-sm">
+              <span className="w-24 shrink-0 tabular-nums text-muted-foreground">{h.date}</span>
               <span className="tabular-nums">{h.sleep.toFixed(1)}h sleep</span>
               <span className="tabular-nums text-muted-foreground">energy {h.energy}/5</span>
-              <span className="tabular-nums text-muted-foreground">{h.focusMinutes}m focus</span>
-              <span className="tabular-nums text-muted-foreground">
+              <span className="hidden tabular-nums text-muted-foreground sm:inline">
+                {h.focusMinutes}m focus
+              </span>
+              <span className="hidden tabular-nums text-muted-foreground sm:inline">
                 {h.steps.toLocaleString()} steps
               </span>
-              <div className="ml-auto flex gap-1">
+              <div className="ml-auto flex shrink-0 gap-1">
                 <Button variant="ghost" size="sm" onClick={() => edit(h)}>
                   Edit
                 </Button>

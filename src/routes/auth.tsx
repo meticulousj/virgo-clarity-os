@@ -38,9 +38,23 @@ function AuthPage() {
   const [errorMsg, setErrorMsg] = React.useState("");
 
   React.useEffect(() => {
+    const hash = new URLSearchParams(window.location.hash.slice(1));
+    if (hash.get("error")) {
+      setStatus("error");
+      setErrorMsg(
+        hash.get("error_code") === "otp_expired"
+          ? "That sign-in link has expired or was already used. Enter your email to get a fresh one, and open only the newest link."
+          : (hash.get("error_description") ?? "Sign-in failed. Please try again."),
+      );
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN" && session) navigate({ to: redirectTo, replace: true });
+    });
     supabase.auth.getUser().then(({ data }) => {
       if (data.user) navigate({ to: redirectTo, replace: true });
     });
+    return () => sub.subscription.unsubscribe();
   }, [navigate, redirectTo]);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -50,7 +64,7 @@ function AuthPage() {
     const { error } = await supabase.auth.signInWithOtp({
       email: email.trim(),
       options: {
-        emailRedirectTo: `${window.location.origin}${redirectTo}`,
+        emailRedirectTo: `${window.location.origin}/auth?redirect=${encodeURIComponent(redirectTo)}`,
       },
     });
     if (error) {

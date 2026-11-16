@@ -13,3 +13,4 @@
 - Import workspace photography as a bundled asset on public pages so previews and published pages use the same media.
 - The side menu and mobile top bar use the `--sidebar-*` tokens on brand ink in both light and dark modes; restyle them through those tokens, not per-component colors.
 - AppShell owns the shared ink page-heading band, while Card and Button own compact mobile spacing and gold primary actions, so modules stay visually consistent.
+- Plan edits use an isolated draft and a browser-safe validation helper before updating the existing device store, so cancel preserves the saved plan and AI generation stays unchanged.

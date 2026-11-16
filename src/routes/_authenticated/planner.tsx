@@ -5,9 +5,12 @@ import { AppShell } from "@/components/virgo/app-shell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, Loader2, Clock } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Sparkles, Loader2, Clock, Pencil, Save, X } from "lucide-react";
 import { generateDailyPlan } from "@/lib/ai.functions";
-import { contextSnapshot, setState, today, useVirgo } from "@/lib/store";
+import { contextSnapshot, setState, today, useVirgo, type DailyPlan, type PlanBlock } from "@/lib/store";
+import { preparePlanEdits } from "@/lib/plan-edits";
 
 export const Route = createFileRoute("/_authenticated/planner")({
   component: PlannerPage,
@@ -35,12 +38,42 @@ function PlannerPage() {
   const run = useServerFn(generateDailyPlan);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const [draft, setDraft] = React.useState<DailyPlan | null>(null);
+  const [saved, setSaved] = React.useState(false);
 
   const plan = state.plan && state.plan.date === today() ? state.plan : null;
+
+  const edit = () => {
+    if (!plan) return;
+    setDraft({ ...plan, blocks: plan.blocks.map((block) => ({ ...block })) });
+    setError(null);
+    setSaved(false);
+  };
+  const updateBlock = (index: number, field: keyof PlanBlock, value: string) => {
+    setDraft((current) => current ? {
+      ...current,
+      blocks: current.blocks.map((block, i) => i === index ? { ...block, [field]: value } : block),
+    } : null);
+  };
+  const save = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!draft) return;
+    try {
+      if (draft.date !== today()) throw new Error("This plan is from yesterday. Build today's plan first.");
+      const updated = preparePlanEdits(draft);
+      setState((s) => ({ ...s, plan: updated }));
+      setDraft(null);
+      setError(null);
+      setSaved(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not save your changes.");
+    }
+  };
 
   const generate = async () => {
     setLoading(true);
     setError(null);
+    setSaved(false);
     try {
       const result = await run({
         data: { snapshot: JSON.stringify(contextSnapshot(state)) },
@@ -66,6 +99,12 @@ function PlannerPage() {
       title="AI Daily Planner"
       subtitle="A time-blocked day built from your priorities, calendar and recent energy."
       actions={
+        <div className="flex flex-wrap gap-2">
+        {draft ? <>
+          <Button variant="outline" onClick={() => { setDraft(null); setError(null); }}><X className="mr-2 h-4 w-4" />Cancel</Button>
+          <Button type="submit" form="edit-daily-plan"><Save className="mr-2 h-4 w-4" />Save changes</Button>
+        </> : <>
+        {plan ? <Button variant="outline" onClick={edit} disabled={loading}><Pencil className="mr-2 h-4 w-4" />Edit plan</Button> : null}
         <Button onClick={generate} disabled={loading}>
           {loading ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -74,6 +113,8 @@ function PlannerPage() {
           )}
           {plan ? "Rebuild plan" : "Build today's plan"}
         </Button>
+        </>}
+        </div>
       }
     >
       {error ? (
@@ -82,7 +123,8 @@ function PlannerPage() {
         </div>
       ) : null}
 
-      <div className="grid gap-4 lg:grid-cols-3">
+      {saved ? <p role="status" className="mb-4 text-sm text-muted-foreground">Plan changes saved.</p> : null}
+      <form id="edit-daily-plan" onSubmit={save} className="grid min-w-0 gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <CardHeader className="pb-2">
             <CardTitle className="font-heading text-lg">Today's blocks</CardTitle>
@@ -96,20 +138,42 @@ function PlannerPage() {
                   work around your fixed events.
                 </p>
               </div>
+            ) : draft ? (
+              <ol className="space-y-4">
+                {draft.blocks.map((block, i) => (
+                  <li key={i} className="min-w-0 space-y-3 border-b pb-4 last:border-0">
+                    <p className="text-xs font-semibold text-muted-foreground">Block {i + 1}</p>
+                    <div className="grid min-w-0 grid-cols-2 gap-3">
+                      <label className="min-w-0 space-y-1 text-xs font-medium">Start
+                        <Input className="min-w-0" type="time" required aria-label={`Block ${i + 1} start`} value={block.start} onChange={(e) => updateBlock(i, "start", e.target.value)} />
+                      </label>
+                      <label className="min-w-0 space-y-1 text-xs font-medium">End
+                        <Input className="min-w-0" type="time" required aria-label={`Block ${i + 1} end`} value={block.end} onChange={(e) => updateBlock(i, "end", e.target.value)} />
+                      </label>
+                    </div>
+                    <label className="block space-y-1 text-xs font-medium">Title
+                      <Input required aria-label={`Block ${i + 1} title`} value={block.title} onChange={(e) => updateBlock(i, "title", e.target.value)} />
+                    </label>
+                    <label className="block space-y-1 text-xs font-medium">Note
+                      <Textarea aria-label={`Block ${i + 1} note`} value={block.why} onChange={(e) => updateBlock(i, "why", e.target.value)} />
+                    </label>
+                  </li>
+                ))}
+              </ol>
             ) : (
               <ol className="space-y-2">
                 {plan.blocks.map((b, i) => (
                   <li
                     key={`${b.start}-${i}`}
-                    className="flex gap-3 rounded-lg border p-3 transition-colors hover:bg-secondary/40"
+                    className="grid grid-cols-[minmax(0,1fr)] gap-2 rounded-lg border p-3 transition-colors hover:bg-secondary/40 sm:grid-cols-[6rem_minmax(0,1fr)] sm:gap-3"
                   >
                     <div className="w-24 shrink-0 font-heading text-sm font-semibold tabular-nums">
                       {b.start}–{b.end}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-medium leading-tight">{b.title}</p>
+                      <p className="break-words text-sm font-medium leading-tight">{b.title}</p>
                       {b.why ? (
-                        <p className="mt-0.5 text-xs text-muted-foreground">{b.why}</p>
+                        <p className="mt-0.5 break-words text-xs text-muted-foreground">{b.why}</p>
                       ) : null}
                     </div>
                   </li>
@@ -125,7 +189,7 @@ function PlannerPage() {
               <CardTitle className="font-heading text-lg">Strategy</CardTitle>
             </CardHeader>
             <CardContent className="text-sm text-muted-foreground">
-              {plan?.note ?? "Virgo explains the logic behind the plan here once it's generated."}
+              {draft ? <Textarea aria-label="Plan strategy" value={draft.note} onChange={(e) => setDraft((current) => current ? { ...current, note: e.target.value } : null)} /> : (plan?.note ?? "Virgo explains the logic behind the plan here once it's generated.")}
             </CardContent>
           </Card>
 
@@ -154,7 +218,7 @@ function PlannerPage() {
             </CardContent>
           </Card>
         </div>
-      </div>
+      </form>
     </AppShell>
   );
 }

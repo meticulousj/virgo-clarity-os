@@ -14,3 +14,4 @@
 - The side menu and mobile top bar use the `--sidebar-*` tokens on brand ink in both light and dark modes; restyle them through those tokens, not per-component colors.
 - AppShell owns the shared ink page-heading band, while Card and Button own compact mobile spacing and gold primary actions, so modules stay visually consistent.
 - Plan edits use an isolated draft and a browser-safe validation helper before updating the existing device store, so cancel preserves the saved plan and AI generation stays unchanged.
+- Public product explanations live in standalone content routes with self-referencing metadata and links to the existing sign-in flow, so they remain shareable without a session.

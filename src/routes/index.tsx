@@ -280,6 +280,9 @@ function Landing() {
       <footer className="ink-stage">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-10 text-xs text-ink-muted sm:px-8">
           <BrandMark size="sm" />
+          <Button asChild variant="ghost" size="sm" className="text-ink-foreground hover:bg-ink-foreground/10 hover:text-ink-foreground">
+            <Link to="/what-is-virgo-os">What is Virgo OS?</Link>
+          </Button>
           <span>© 2026 Virgo OS · Clarity & execution.</span>
         </div>
       </footer>

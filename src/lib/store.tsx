@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import type { BrainPriority } from "./brain-dump";
 
 export type Task = {
   id: string;
@@ -96,6 +97,7 @@ export type State = {
   health: HealthLog[];
   plan: DailyPlan | null;
   recommendations: { text: string; generatedAt: string } | null;
+  brainDump: { text: string; priorities: BrainPriority[]; taskIds: string[] } | null;
 };
 
 export const iso = (d: Date) => d.toISOString().slice(0, 10);
@@ -254,6 +256,7 @@ const seed: State = {
   health: seedHealth(),
   plan: null,
   recommendations: null,
+  brainDump: null,
 };
 
 const KEY = "virgo-os-state-v1";

@@ -9,4 +9,5 @@
 - [x] Match remaining dashboard and module surfaces to navy-and-gold styling
 - [x] Check all modules signed in at phone widths
 - [x] Add AI plan editing and verify saved changes on desktop and phone
-- [ ] Add a public “What is Virgo OS?” page and verify its app links and phone layout
+- [x] Add a public “What is Virgo OS?” page and verify its app links and phone layout
+- [x] Add dashboard brain dump → three priorities, save to tasks, and verify on desktop and phone

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import * as React from "react";
 import { AppShell } from "@/components/virgo/app-shell";
 import { FocusTimer } from "@/components/virgo/widgets/focus-timer";
+import { BrainDump } from "@/components/virgo/brain-dump";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -94,6 +95,7 @@ function Index() {
     >
       <div className="virgo-rise grid gap-6 xl:grid-cols-[minmax(0,1.65fr)_minmax(300px,0.85fr)]">
         <div className="space-y-6">
+          <BrainDump />
           <section className="border-b border-gold/35 py-2 sm:py-4">
             <div className="max-w-2xl">
               <p className="eyebrow flex items-center gap-2 text-muted-foreground">

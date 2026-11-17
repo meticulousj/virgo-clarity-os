@@ -11,3 +11,4 @@
 - [x] Add AI plan editing and verify saved changes on desktop and phone
 - [x] Add a public “What is Virgo OS?” page and verify its app links and phone layout
 - [x] Add dashboard brain dump → three priorities, save to tasks, and verify on desktop and phone
+- [ ] Add one-click next action with a task recommendation, reason, and desktop/phone verification
